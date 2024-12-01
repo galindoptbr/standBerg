@@ -9,11 +9,11 @@ import Image from "next/image";
 
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
 
-import Img1 from "@/assets/images/event1.png";
-import Img2 from "@/assets/images/event2.png";
-import Img3 from "@/assets/images/event3.png";
-import Img4 from "@/assets/images/event4.png";
-import Img5 from "@/assets/images/event5.png";
+import Img1 from "../src/assets/images/event1.png";
+import Img2 from "../src/assets/images/event2.png";
+import Img3 from "../src/assets/images/event3.png";
+import Img4 from "../src/assets/images/event4.png";
+import Img5 from "../src/assets/images/event5.png";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
