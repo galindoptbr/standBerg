@@ -2,20 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Estilos globais do scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #e2453c #232323;
+}
+
+/* Estilo para navegadores Webkit (Chrome, Safari) */
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #232323;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #4299e1;
+    border-radius: 6px;
+    border: 3px solid #edf2f7;
 }
