@@ -112,7 +112,7 @@ const ProductList: React.FC = () => {
           <select
             onChange={handleBrandChange}
             value={selectedBrand || ""}
-            className="p-3 text-center bg-zinc-300 text-red-500 font-bold rounded w-80 appearance-none"
+            className="p-3 text-center bg-zinc-300 text-red-500 font-bold rounded w-80"
           >
             <option value="">TODOS</option>
             {brandsWithCount.map(({ brand, count }) => (
