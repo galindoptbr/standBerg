@@ -266,7 +266,7 @@ const AdminPage: React.FC = () => {
         {previewImages.length > 0 && (
           <div className="flex gap-2 mt-4">
             {previewImages.map((src, index) => (
-              <img
+              <Image
                 key={index}
                 src={src}
                 alt={`Pré-visualização ${index + 1}`}

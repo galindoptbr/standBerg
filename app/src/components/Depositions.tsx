@@ -2,8 +2,6 @@ import Image from "next/image";
 import React from "react";
 
 import profileImage from "../assets/images/profile-image.png";
-import profileImage1 from "../assets/images/profile-image-1.png";
-import profileImage2 from "../assets/images/profile-image-2.png";
 
 export const Depositions = () => {
   return (
