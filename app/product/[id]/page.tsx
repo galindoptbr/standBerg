@@ -162,7 +162,7 @@ const ProductPage: React.FC = () => {
               </ul>
             </div>
             <a
-              href="https://wa.link/5jbbft"
+              href="/"
               target="_blank"
               className="inline-block"
             >

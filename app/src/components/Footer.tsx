@@ -27,7 +27,7 @@ export const Footer = () => {
               </p>
             </div>
             <a
-              href="https://wa.link/8l2ndh"
+              href="/"
               target="_blank"
               className="inline-block"
             >
@@ -95,19 +95,19 @@ export const Footer = () => {
               <p className="font-bold mb-3">Nos siga nas redes sociais:</p>
               <div className="flex gap-3">
                 <Link
-                  href="https://www.instagram.com/olavo_scalewheels/"
+                  href="https://www.instagram.com"
                   target="_blank"
                 >
                   <ImInstagram className="hover:text-zinc-300" size={30} />
                 </Link>
                 <Link
-                  href="https://www.facebook.com/share/jrqFPLurXjgrjVof/"
+                  href="https://www.facebook.com"
                   target="_blank"
                 >
                   <ImFacebook2 className="hover:text-zinc-300" size={30} />
                 </Link>
                 <Link
-                  href="https://www.youtube.com/@hwcollectors8537"
+                  href="https://www.youtube.com"
                   target="_blank"
                 >
                   <ImYoutube className="hover:text-zinc-300" size={35} />
