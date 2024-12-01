@@ -20,43 +20,46 @@ export const Depositions = () => {
         <div className="flex flex-col justify-center gap-8 p-8 lg:flex-row">
           <div className="border-b-2 lg:border-e-2 lg:border-b-0 border-zinc-300">
             <p className="w-80 text-zinc-700 mr-4">
-              Rodas de primeira qualidade. O Olavo sempre disponível para ajudar
-              ao ponto da roda ser ao meu gosto. Conto com ele para calçar
-              muitos dos meus RWB e não só...
+              Comprei meu carro no Stand Berglins e fiquei impressionado com o
+              atendimento. O vendedor foi super atencioso e me ajudou a
+              encontrar o carro ideal para minha família. Recomendo de olhos
+              fechados!
             </p>
             <div className="flex gap-4 mt-6">
               <Image
                 className="w-14 mb-4"
-                src={profileImage1}
+                src={profileImage}
                 alt="imagem de perfil"
               />
               <div className="flex flex-col text-zinc-700">
                 <span className="font-semibold">José Teixeira</span>
-                <span className="font-semibold">Colecionador</span>
+                <span className="text-sm italic">Opel Corsa 2014</span>
               </div>
             </div>
           </div>
           <div className="border-b-2 lg:border-e-2 lg:border-b-0 border-zinc-300">
             <p className="w-80 text-zinc-700 mr-4">
-              Top 5 ✨ rodas de qualidade, tudo muito bem embalado e rápido
-              envio. Recomendo vivamente 👍 Todas as dúvidas que tive, foram
-              prontamente esclarecidas...
+              Adorei a experiência no Stand Berglins! Eles foram transparentes
+              em todas as etapas e entregaram o carro em perfeitas condições.
+              Além disso, o pós-venda foi excelente! Recomendo demais!
             </p>
             <div className="flex gap-4 mt-6">
               <Image
                 className="w-14 mb-4"
-                src={profileImage2}
+                src={profileImage}
                 alt="imagem de perfil"
               />
               <div className="flex flex-col text-zinc-700">
                 <span className="font-semibold">João Costa</span>
-                <span className="font-semibold">Colecionador</span>
+                <span className="text-sm italic">VW Golf 2022</span>
               </div>
             </div>
           </div>
           <div>
             <p className="w-80 text-zinc-700 mr-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, tempora itaque facere eveniet quasi! Lorem ipsum dolor sit amet consectetur adipisicing elit...
+              Estava em dúvida sobre qual carro escolher, mas no Stand Berglins
+              recebi toda a orientação necessária. Saí de lá super satisfeito
+              com meu novo veículo. Atendimento nota 10!
             </p>
             <div className="flex gap-4 mt-6">
               <Image
@@ -66,7 +69,7 @@ export const Depositions = () => {
               />
               <div className="flex flex-col text-zinc-700">
                 <span className="font-semibold">John Doe</span>
-                <span className="font-semibold">Colecionador</span>
+                <span className="text-sm italic">Mercedes CLA 200</span>
               </div>
             </div>
           </div>

@@ -53,7 +53,7 @@ const AboutPage: React.FC = () => {
       </div>
       <div>
         <div className="flex flex-col m-auto text-center mt-12 max-w-[956px]">
-          <p className="text-3xl font-semibold">Sobre a Olavo Scale Wheels</p>
+          <p className="text-3xl font-semibold">Sobre a Berg Lins Automóveis</p>
           <p className="text-zinc-400 mt-6 p-2 lg:p-0">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut aperiam
             eaque dolores, eos aliquam ipsa, accusantium perferendis at ut unde
@@ -65,10 +65,10 @@ const AboutPage: React.FC = () => {
           </p>
         </div>
         <div className="max-w-[1200px] mx-auto mt-10">
-          <div className="aspect-w-16 aspect-h-9">
+          <div className="m-auto relative max-w-[1050px] h-0 pb-[56.25%]">
             <iframe
-              className="w-full h-full border-0 rounded-2xl p-2 lg:p-0"
-              src="https://www.youtube.com/embed/1UijpiPv2yA"
+              className="absolute top-0 left-0 w-full h-full border-0 rounded-2xl p-2 lg:p-0"
+              src="https://www.youtube.com/embed/SHOXqP0EI6w"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -87,7 +87,7 @@ const AboutPage: React.FC = () => {
             deserunt harum sunt eaque voluptatum, labore ut temporibus eum?
           </p>
         </div>
-        <div className="max-w-[1200px] mx-auto mt-10 p-2 lg:p-0">
+        <div className="max-w-[950px] h-[450px] mx-auto mt-10 p-2 lg:p-0">
           <Swiper
             cssMode={true}
             navigation={true}
