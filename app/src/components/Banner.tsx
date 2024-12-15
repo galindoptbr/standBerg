@@ -9,8 +9,9 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 
-import { CiDeliveryTruck } from "react-icons/ci";
-import { SlLocationPin, SlPrinter } from "react-icons/sl";
+import { BsCarFront } from "react-icons/bs";
+import { BiLike } from "react-icons/bi";
+import { PiChatBold } from "react-icons/pi";
 
 import banner1 from "../assets/images/banner-about1.png";
 import banner2 from "../assets/images/banner-about2.png";
@@ -47,20 +48,16 @@ export const Banner = () => {
       <div className="hidden lg:block w-full h-20 bg-zinc-300">
         <div className="flex justify-center gap-4">
           <div className="flex items-center mt-6 gap-4 text-zinc-700 border-e-2 border-zinc-400">
-            <CiDeliveryTruck size={35} />
-            <p className="font-semibold text-md mr-4">
-              Portes Grátis para pedidos acima de 5 sets!{" "}
-            </p>
+          <PiChatBold size={25} />
+            <p className="font-semibold text-md mr-4">Vendedor qualificado </p>
           </div>
           <div className="flex items-center mt-6 gap-4 text-zinc-700 border-e-2 border-zinc-400">
-            <SlPrinter size={25} />
-            <p className="font-semibold text-md mr-4">
-              Impressão feita em 24hs!{" "}
-            </p>
+            <BsCarFront size={25} />
+            <p className="font-semibold text-md mr-4">Marcas de qualidade </p>
           </div>
           <div className="flex items-center mt-6 gap-4 text-zinc-700">
-            <SlLocationPin size={25} />
-            <p className="font-semibold text-md">Aberto 7 dias por semana! </p>
+            <BiLike size={25} />
+            <p className="font-semibold text-md">Confiança e transparência </p>
           </div>
         </div>
       </div>

@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { db, storage } from "../src/services/firebase";
+import { useRouter } from "next/navigation";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { db, storage, app } from "../src/services/firebase";
 import {
   collection,
   addDoc,
@@ -17,6 +19,7 @@ import Link from "next/link";
 import imageCompression from "browser-image-compression";
 
 const AdminPage: React.FC = () => {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState<number | string>("");
@@ -31,7 +34,16 @@ const AdminPage: React.FC = () => {
   const [editId, setEditId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Função fetchProducts movida para fora do useEffect para ser reutilizável
+  useEffect(() => {
+    const auth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/login?error=unauthorized"); // Passa um parâmetro de erro
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
   const fetchProducts = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "products"));
@@ -39,7 +51,6 @@ const AdminPage: React.FC = () => {
       const productsData = querySnapshot.docs.map((doc) => {
         const data = doc.data();
 
-        // Fazendo o casting para garantir que temos todas as propriedades do tipo Product
         const product: Product = {
           id: doc.id,
           name: data.name || "Produto sem nome",
@@ -48,12 +59,12 @@ const AdminPage: React.FC = () => {
           images:
             data.images && data.images.length
               ? data.images
-              : ["/placeholder.jpg"], // Usar uma imagem padrão se estiver vazio
+              : ["/placeholder.jpg"],
           brand: data.brand || "Marca desconhecida",
           kilometers: data.kilometers ? Number(data.kilometers) : 0,
-          fuel: data.fuel || "Combustivel desconehcido",
-          gearbox: data.gearbox || "Cambio deconhecido",
-          power: data.power || "Potencia deconhecida",
+          fuel: data.fuel || "Combustivel desconhecido",
+          gearbox: data.gearbox || "Cambio desconhecido",
+          power: data.power || "Potencia desconhecida",
           top: data.top || false,
         };
 
@@ -74,7 +85,6 @@ const AdminPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Primeiro fazer upload das novas imagens e obter URLs
       let imageUrls = previewImages;
 
       if (images.length > 0) {
@@ -187,7 +197,7 @@ const AdminPage: React.FC = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4 text-center">
-        Cadastro de Viaturas
+        Cadastro de Carros
       </h1>
       <div className="flex flex-col max-w-[750px] m-auto">
         <input
@@ -254,7 +264,6 @@ const AdminPage: React.FC = () => {
               const files = Array.from(e.target.files);
               setImages(files);
 
-              // Gerar URLs de pré-visualização para as novas imagens
               const previews = files.map((file) => URL.createObjectURL(file));
               setPreviewImages(previews);
             }
@@ -262,7 +271,6 @@ const AdminPage: React.FC = () => {
           className="p-2 mb-2 block"
         />
 
-        {/* Pré-visualização das Imagens */}
         {previewImages.length > 0 && (
           <div className="flex gap-2 mt-4">
             {previewImages.map((src, index) => (
@@ -286,15 +294,14 @@ const AdminPage: React.FC = () => {
           {isLoading
             ? "Processando..."
             : editId
-            ? "Atualizar Viatura"
-            : "Cadastrar Viatura"}
+            ? "Atualizar Carro"
+            : "Cadastrar Carro"}
         </button>
       </div>
 
-      {/* Lista de Produtos estilizada como ProductList */}
       <div className="mt-8 max-w-[1200px] m-auto">
         <h2 className="text-3xl font-semibold text-center mb-4">
-          Viaturas Cadastradas
+          Carros Cadastrados
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-2 lg:p-0">
           {products.map((product) => (
@@ -345,7 +352,7 @@ const AdminPage: React.FC = () => {
                 </div>
                 <Link href={`/product/${product.id}`}>
                   <button className="bg-zinc-500 hover:bg-zinc-700 p-2 rounded-md font-bold w-40 mt-4">
-                    <span className="text-white">VER VIATURA</span>
+                    <span className="text-white">Ver Anúncio</span>
                   </button>
                 </Link>
               </div>

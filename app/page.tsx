@@ -1,3 +1,5 @@
+"use client";
+
 import { NextPage } from "next";
 import { Banner } from "./src/components/Banner";
 import ProductList from "./src/components/ProductList";

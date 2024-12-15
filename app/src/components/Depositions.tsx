@@ -14,7 +14,7 @@ export const Depositions = () => {
           Verifique nossas últimas avaliações de clientes e dê seu feedback.
         </span>
       </div>
-      <div className="mt-6 h-[670px] max-w-[1200px] rounded-md bg-zinc-200 lg:m-auto lg:mt-6 lg:h-64">
+      <div className="mt-6 h-[690px] max-w-[1200px] rounded-md bg-zinc-200 lg:m-auto lg:mt-6 lg:h-72">
         <div className="flex flex-col justify-center gap-8 p-8 lg:flex-row">
           <div className="border-b-2 lg:border-e-2 lg:border-b-0 border-zinc-300">
             <p className="w-80 text-zinc-700 mr-4">

@@ -1,15 +1,26 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 import logo from "../assets/images/berg-lins.png";
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user); // Define se o usuário está logado
+    });
+    return () => unsubscribe();
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,16 +30,22 @@ export const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  const handleLogout = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      console.error("Erro ao sair: ", error);
+    }
+  };
+
   return (
     <>
       <div className="w-full bg-zinc-300 shadow-lg relative">
         <div className="flex justify-between items-center m-auto p-4 max-w-[1200px]">
           <Link href="/" replace>
-            <Image
-              className="w-48 rounded-lg"
-              src={logo}
-              alt="logo olavo"
-            />
+            <Image className="w-48 rounded-lg" src={logo} alt="logo olavo" />
           </Link>
           {/* Navbar para telas grandes */}
           <ul className="hidden lg:flex gap-8 items-center font-semibold">
@@ -54,7 +71,7 @@ export const Navbar = () => {
                     : "text-zinc-700 hover:text-red-500"
                 }`}
               >
-                Viaturas
+                Carros
               </Link>
             </li>
             <li>
@@ -66,9 +83,29 @@ export const Navbar = () => {
                     : "text-zinc-700 hover:text-red-500"
                 }`}
               >
-                Sobre
+                Quem Somos
               </Link>
             </li>
+            {isLoggedIn && ["/", "/catalog", "/about"].includes(pathname) && (
+              <li>
+                <Link
+                  href="/admin"
+                  className="text-zinc-700 hover:text-red-500 transition-colors duration-300"
+                >
+                  Admin
+                </Link>
+              </li>
+            )}
+            {pathname.startsWith("/admin") && (
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="text-zinc-700 hover:text-red-500 transition-colors duration-300"
+                >
+                  Sair
+                </button>
+              </li>
+            )}
           </ul>
           <button
             onClick={toggleMenu}

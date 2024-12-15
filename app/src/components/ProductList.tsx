@@ -103,9 +103,9 @@ const ProductList: React.FC = () => {
     <>
       <div className="max-w-[1200px] m-auto">
         <div className="flex flex-col text-center mt-12">
-          <p className="text-3xl font-semibold">Catálogo de viaturas</p>
+          <p className="text-3xl font-semibold">Catálogo de carros</p>
           <p className="text-zinc-400">
-            Conheça todas as nossas viaturas ou pesquise por marcas.
+            Veja todos os nossos carros a venda ou pesquise por marcas.
           </p>
         </div>
         <div className="flex justify-center gap-4 mt-6">
@@ -139,7 +139,7 @@ const ProductList: React.FC = () => {
                   <p className="mt-2 text-2xl text-zinc-600 font-bold">
                     {product.name}
                   </p>
-                  <span className="flex items-center gap-1 mt-2 text-2xl font-semibold text-zinc-600">
+                  <span className="flex bg-red-500 py-1 px-4 rounded-md text-zinc-100 items-center gap-1 mt-2 text-2xl font-semibold mb-4">
                     {new Intl.NumberFormat("de-DE").format(product.price)}{" "}
                     <p className="text-sm">EUR</p>
                   </span>
@@ -149,15 +149,10 @@ const ProductList: React.FC = () => {
                         product.kilometers
                       )}{" "}
                       km
-                    </p>·
-                    <p>{product.fuel}</p>·
-                    <p>{product.gearbox}</p>·
+                    </p>
+                    ·<p>{product.fuel}</p>·<p>{product.gearbox}</p>·
                     <p>{product.power} cv</p>
                   </div>
-
-                  <button className="bg-red-500 hover:bg-zinc-700 p-2 rounded-md font-bold w-48 mt-4">
-                    <span className="text-white">VER VIATURA</span>
-                  </button>
                 </div>
               </div>
             </Link>

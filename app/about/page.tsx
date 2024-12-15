@@ -9,11 +9,9 @@ import Image from "next/image";
 
 import { Keyboard, Mousewheel, Navigation, Pagination } from "swiper/modules";
 
-import Img1 from "../src/assets/images/event1.png";
-import Img2 from "../src/assets/images/event2.png";
-import Img3 from "../src/assets/images/event3.png";
-import Img4 from "../src/assets/images/event4.png";
-import Img5 from "../src/assets/images/event5.png";
+import Img1 from "../src/assets/images/model3.png";
+import Img2 from "../src/assets/images/alfaromeo.png";
+import Img3 from "../src/assets/images/captur.png";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -31,7 +29,7 @@ const AboutPage: React.FC = () => {
               className={`transition-colors duration-300 ${
                 pathname === "/"
                   ? "text-yellow-500"
-                  : "text-zinc-400 hover:text-yellow-500"
+                  : "text-zinc-400 hover:text-red-500"
               }`}
             >
               Início /
@@ -43,10 +41,10 @@ const AboutPage: React.FC = () => {
               className={`transition-colors duration-300 ${
                 pathname === "/catalog"
                   ? "text-yellow-500"
-                  : "text-zinc-400 hover:text-yellow-500"
+                  : "text-zinc-400 hover:text-red-500"
               }`}
             >
-              Sobre
+              Quem Somos
             </Link>
           </li>
         </ul>
@@ -76,7 +74,7 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col text-center mt-12">
-          <p className="text-3xl font-semibold">Veja onde já estivemos</p>
+          <p className="text-3xl font-semibold">Veja nossos últimos clientes</p>
           <p className="text-zinc-400 max-w-[956px] m-auto mt-6 p-2 lg:p-0">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
             aliquam voluptatem quod itaque quas vel accusamus nam accusantium
@@ -105,12 +103,6 @@ const AboutPage: React.FC = () => {
             </SwiperSlide>
             <SwiperSlide>
               <Image src={Img3} alt="Img 1" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image src={Img4} alt="Img 1" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image src={Img5} alt="Img 1" />
             </SwiperSlide>
           </Swiper>
         </div>

@@ -135,7 +135,7 @@ const ProductPage: React.FC = () => {
             </span>
             <div className="border border-zinc-300 rounded-md p-4 mb-8">
               <p className="text-2xl font-bold pb-4 text-zinc-700">Destaques</p>
-              <ul className="grid grid-cols-2 gap-2 md:flex md:justify-center md:gap-16 pb-4">
+              <ul className="grid grid-cols-2 gap-2 md:flex md:justify-center md:gap-14 pb-4">
                 <li className="flex flex-col items-center">
                   <PiRoadHorizonBold size={25} />
                   <p className="text-sm">Quilómetros</p>

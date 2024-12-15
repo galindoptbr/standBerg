@@ -78,7 +78,7 @@ export const Footer = () => {
                   }`}
                 >
                   <MdKeyboardArrowRight />
-                  Sobre
+                  Quem Somos
                 </Link>
               </li>
             </ul>
