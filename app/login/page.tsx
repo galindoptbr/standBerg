@@ -13,19 +13,20 @@ import { app } from "../src/services/firebase";
 import { setCookie } from "nookies";
 import { FcGoogle } from "react-icons/fc";
 
-const LoginPage: React.FC<{
-  searchParams?: Record<string, string | undefined>;
-}> = ({ searchParams }) => {
+const LoginPage: React.FC = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
   useEffect(() => {
-    if (searchParams?.error === "unauthorized") {
+    // Captura o parâmetro de erro na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get("error");
+    if (errorParam === "unauthorized") {
       setError("Você não tem permissão para acessar esta página.");
     }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
