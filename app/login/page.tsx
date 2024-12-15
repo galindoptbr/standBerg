@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   getAuth,
   signInWithPopup,
@@ -13,17 +13,17 @@ import { app } from "../src/services/firebase";
 import { setCookie } from "nookies";
 import { FcGoogle } from "react-icons/fc";
 
-const LoginPage: React.FC = () => {
+const LoginPage: React.FC<{ searchParams: { [key: string]: string } }> = ({
+  searchParams,
+}) => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  const searchParams = useSearchParams();
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
   useEffect(() => {
     // Captura o parâmetro de erro na URL
-    const errorParam = searchParams.get("error");
-    if (errorParam === "unauthorized") {
+    if (searchParams.error === "unauthorized") {
       setError("Você não tem permissão para acessar esta página.");
     }
   }, [searchParams]);
