@@ -39,30 +39,40 @@ const LoginPage: React.FC = () => {
   }, [auth, router]);
 
   const handleGoogleLogin = async () => {
-    setError(""); // Limpa mensagens de erro ao iniciar uma nova tentativa
+    setError("");
     try {
+      // Configura o provedor para forçar a seleção de conta
+      provider.setCustomParameters({
+        prompt: "select_account", // Força o pop-up a exibir a seleção de conta
+      });
+
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      if (!user.email) {
+        setError("Não foi possível obter seu e-mail. Tente novamente.");
+        await signOut(auth);
+        return;
+      }
 
       // Lista de e-mails autorizados
       const adminEmails = ["galindoleitept@gmail.com"];
 
-      if (!adminEmails.includes(user.email || "")) {
+      if (!adminEmails.includes(user.email)) {
         setError(
           "Acesso negado. Você não está autorizado a acessar este sistema."
         );
         await signOut(auth); // Faz logout
-        return; // Impede o fluxo de continuar
+        return;
       }
 
       const token = await user.getIdToken();
-
       setCookie(null, "authToken", token, {
         maxAge: 60 * 60 * 24, // 1 dia
         path: "/", // Disponível em todo o site
       });
 
-      router.push("/admin"); // Redireciona para a página admin
+      router.push("/admin");
     } catch (err) {
       setError("Falha ao fazer login com Google. Tente novamente.");
       console.error(err);
