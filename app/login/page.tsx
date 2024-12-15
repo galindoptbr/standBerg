@@ -13,26 +13,24 @@ import { app } from "../src/services/firebase";
 import { setCookie } from "nookies";
 import { FcGoogle } from "react-icons/fc";
 
-const LoginPage: React.FC<{ searchParams: { [key: string]: string } }> = ({
-  searchParams,
-}) => {
+const LoginPage: React.FC<{
+  searchParams: { [key: string]: string | undefined };
+}> = ({ searchParams }) => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
   useEffect(() => {
-    // Captura o parâmetro de erro na URL
     if (searchParams.error === "unauthorized") {
       setError("Você não tem permissão para acessar esta página.");
     }
   }, [searchParams]);
 
   useEffect(() => {
-    // Verifica se o usuário está autenticado
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        router.push("/admin"); // Redireciona para a página admin
+        router.push("/admin");
       }
     });
 
@@ -63,7 +61,7 @@ const LoginPage: React.FC<{ searchParams: { [key: string]: string } }> = ({
         path: "/", // Disponível em todo o site
       });
 
-      router.push("/admin"); // Redireciona para a página admin
+      router.push("/admin");
     } catch (err) {
       setError("Falha ao fazer login com Google. Tente novamente.");
       console.error(err);
