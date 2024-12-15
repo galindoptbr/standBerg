@@ -14,7 +14,7 @@ import { setCookie } from "nookies";
 import { FcGoogle } from "react-icons/fc";
 
 const LoginPage: React.FC<{
-  searchParams: { [key: string]: string | undefined };
+  searchParams?: Record<string, string | undefined>;
 }> = ({ searchParams }) => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
@@ -22,7 +22,8 @@ const LoginPage: React.FC<{
   const provider = new GoogleAuthProvider();
 
   useEffect(() => {
-    if (searchParams.error === "unauthorized") {
+    // Captura o parâmetro de erro na URL
+    if (searchParams?.error === "unauthorized") {
       setError("Você não tem permissão para acessar esta página.");
     }
   }, [searchParams]);
@@ -61,7 +62,7 @@ const LoginPage: React.FC<{
         path: "/", // Disponível em todo o site
       });
 
-      router.push("/admin");
+      router.push("/admin"); // Redireciona para a página admin
     } catch (err) {
       setError("Falha ao fazer login com Google. Tente novamente.");
       console.error(err);
