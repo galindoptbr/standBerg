@@ -22,7 +22,6 @@ const LoginPage: React.FC<{
   const provider = new GoogleAuthProvider();
 
   useEffect(() => {
-    // Captura o parâmetro de erro na URL
     if (searchParams?.error === "unauthorized") {
       setError("Você não tem permissão para acessar esta página.");
     }
