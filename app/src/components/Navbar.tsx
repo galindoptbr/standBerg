@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-import logo from "../assets/images/berg-lins.png";
+import logo from "../assets/images/seustandlogo.png";
 
 export const Navbar = () => {
   const pathname = usePathname();
