@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
       }
 
       // Lista de e-mails autorizados
-      const adminEmails = ["galindoleitept@gmail.com"];
+      const adminEmails = ["galindoleitept@gmail.com", "feliciosantoslive@gmail.com"];
 
       if (!adminEmails.includes(user.email)) {
         setError(
