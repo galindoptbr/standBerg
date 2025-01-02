@@ -279,6 +279,8 @@ const AdminPage: React.FC = () => {
                 src={src}
                 alt={`Pré-visualização ${index + 1}`}
                 className="w-24 h-24 object-cover rounded"
+                width={96}
+                height={96}
               />
             ))}
           </div>
