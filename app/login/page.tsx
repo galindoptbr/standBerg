@@ -17,8 +17,8 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
   const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-
+/*   const provider = new GoogleAuthProvider();
+ */
   useEffect(() => {
     // Captura o parâmetro de erro na URL
     const urlParams = new URLSearchParams(window.location.search);
