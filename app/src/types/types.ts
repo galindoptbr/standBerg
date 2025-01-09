@@ -13,7 +13,5 @@ export interface Product {
   fuel: string;
   gearbox: string;
   power: string;
-  colors?: string[];
-  diameters?: string[];
   top?: boolean;
 }

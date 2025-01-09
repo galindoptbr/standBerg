@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
     return () => unsubscribe();
   }, [auth, router]);
 
-  const handleGoogleLogin = async () => {
+  /* const handleGoogleLogin = async () => {
     setError("");
     try {
       // Configura o provedor para forçar a seleção de conta
@@ -77,7 +77,39 @@ const LoginPage: React.FC = () => {
       setError("Falha ao fazer login com Google. Tente novamente.");
       console.error(err);
     }
+  }; */
+
+  const handleGoogleLogin = async () => {
+    try {
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+  
+      provider.setCustomParameters({
+        prompt: "select_account", // Força o pop-up a exibir a seleção de conta
+      });
+  
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+  
+      if (!user.email) {
+        alert("Não foi possível obter seu e-mail. Tente novamente.");
+        await signOut(auth);
+        return;
+      }
+  
+      const token = await user.getIdToken();
+      setCookie(null, "authToken", token, {
+        maxAge: 60 * 60 * 24, // 1 dia
+        path: "/", // Disponível em todo o site
+      });
+  
+      router.push("/admin");
+    } catch (err) {
+      console.error("Falha ao fazer login com Google:", err);
+      alert("Erro ao fazer login. Tente novamente.");
+    }
   };
+  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">

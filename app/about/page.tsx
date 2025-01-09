@@ -51,8 +51,8 @@ const AboutPage: React.FC = () => {
       </div>
       <div>
         <div className="flex flex-col m-auto text-center mt-12 max-w-[956px]">
-          <p className="text-3xl font-semibold">Sobre a Berg Lins Automóveis</p>
-          <p className="text-zinc-400 mt-6 p-2 lg:p-0">
+          <p className="text-3xl font-semibold">Sobre o Seu Stand Automóveis</p>
+          <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut aperiam
             eaque dolores, eos aliquam ipsa, accusantium perferendis at ut unde
             modi expedita. Tempore voluptate quod adipisci exercitationem

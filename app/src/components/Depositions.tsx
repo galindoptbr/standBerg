@@ -18,7 +18,7 @@ export const Depositions = () => {
         <div className="flex flex-col justify-center gap-8 p-8 lg:flex-row">
           <div className="border-b-2 lg:border-e-2 lg:border-b-0 border-zinc-300">
             <p className="w-80 text-zinc-700 mr-4">
-              Comprei meu carro no Stand Berglins e fiquei impressionado com o
+              Comprei meu carro no Seu Stand e fiquei impressionado com o
               atendimento. O vendedor foi super atencioso e me ajudou a
               encontrar o carro ideal para minha família. Recomendo de olhos
               fechados!
@@ -37,7 +37,7 @@ export const Depositions = () => {
           </div>
           <div className="border-b-2 lg:border-e-2 lg:border-b-0 border-zinc-300">
             <p className="w-80 text-zinc-700 mr-4">
-              Adorei a experiência no Stand Berglins! Eles foram transparentes
+              Adorei a experiência no Seu Stand! Eles foram transparentes
               em todas as etapas e entregaram o carro em perfeitas condições.
               Além disso, o pós-venda foi excelente! Recomendo demais!
             </p>
@@ -55,9 +55,9 @@ export const Depositions = () => {
           </div>
           <div>
             <p className="w-80 text-zinc-700 mr-4">
-              Estava em dúvida sobre qual carro escolher, mas no Stand Berglins
+              Estava em dúvida sobre qual carro escolher, mas no Seu Stand
               recebi toda a orientação necessária. Saí de lá super satisfeito
-              com meu novo veículo. Atendimento nota 10!
+              com meu novo veículo. Atendimento nota 10! Recomendo!
             </p>
             <div className="flex gap-4 mt-6">
               <Image
