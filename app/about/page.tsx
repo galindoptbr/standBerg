@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 pt-10 pl-10  m-auto max-w-[1200px] ">
+      <div className="flex gap-2 pt-16 pl-10  m-auto max-w-[1200px] ">
         <ul className="flex gap-2">
           <li>
             <Link

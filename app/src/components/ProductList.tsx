@@ -78,7 +78,15 @@ const ProductList: React.FC = () => {
   // Mover a tela ao título ao mudar de página
   useEffect(() => {
     if (titleRef.current) {
-      titleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      const navbarHeight = 94;
+      const elementPosition =
+        titleRef.current.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   }, [currentPage]);
 

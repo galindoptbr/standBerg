@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "../app/src/components/Navbar";
 import { Footer } from "../app/src/components/Footer";
+import ClientLayout from "../app/src/components/ClientLayout";
 
 interface CustomMetadata extends Metadata {
   image?: string;
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="pt">
       <body className="text-zinc-700 bg-zinc-100">
         <Navbar />
-        {children}
+        <ClientLayout>{children}</ClientLayout>
         <Footer />
       </body>
     </html>

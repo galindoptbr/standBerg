@@ -42,7 +42,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="w-full bg-zinc-300 shadow-lg relative">
+      <div className="w-full bg-zinc-300 shadow-lg fixed top-0 left-0 z-50">
         <div className="flex justify-between items-center m-auto p-4 max-w-[1200px]">
           <Link href="/" replace>
             <Image className="w-48 rounded-lg" src={logo} alt="logo olavo" />
@@ -58,6 +58,11 @@ export const Navbar = () => {
                     ? "text-red-500"
                     : "text-zinc-700 hover:text-red-500"
                 }`}
+                onClick={() => {
+                  if (pathname === "/") {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
               >
                 Início
               </Link>
@@ -155,7 +160,12 @@ export const Navbar = () => {
               href="/"
               replace
               className={`text-red-500 hover:text-yellow-500 font-bold`}
-              onClick={closeMenu}
+              onClick={() => {
+                closeMenu();
+                if (pathname === "/") {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
             >
               Início
             </Link>
@@ -178,6 +188,30 @@ export const Navbar = () => {
               Sobre
             </Link>
           </li>
+          {isLoggedIn && ["/", "/catalog", "/about"].includes(pathname) && (
+            <li>
+              <Link
+                href="/admin"
+                className={`text-zinc-700 font-bold hover:text-yellow-500`}
+                onClick={closeMenu}
+              >
+                Admin
+              </Link>
+            </li>
+          )}
+          {pathname.startsWith("/admin") && (
+            <li>
+              <button
+                onClick={() => {
+                  closeMenu();
+                  handleLogout();
+                }}
+                className="text-zinc-700 font-bold hover:text-yellow-500"
+              >
+                Sair
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </>
