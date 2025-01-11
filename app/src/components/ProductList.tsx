@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Product } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +16,9 @@ const ProductList: React.FC = () => {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const productsPerPage = 12;
 
+  // Ref para o título
+  const titleRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const fetchProductsAndBrands = async () => {
       try {
@@ -24,7 +27,6 @@ const ProductList: React.FC = () => {
         const productsData = querySnapshot.docs.map((doc) => {
           const data = doc.data();
 
-          // Fazendo o casting para garantir que temos todas as propriedades do tipo Product
           const product: Product = {
             id: doc.id,
             name: data.name || "Produto sem nome",
@@ -47,7 +49,6 @@ const ProductList: React.FC = () => {
 
         setProducts(productsData);
 
-        // Criando um objeto para contar quantas vezes cada marca aparece
         const brandCounts: Record<string, number> = {};
 
         productsData.forEach((product) => {
@@ -58,7 +59,6 @@ const ProductList: React.FC = () => {
           }
         });
 
-        // Convertendo o objeto para um array de objetos
         const brandsWithCountArray = Object.entries(brandCounts).map(
           ([brand, count]) => ({
             brand,
@@ -75,8 +75,11 @@ const ProductList: React.FC = () => {
     fetchProductsAndBrands();
   }, []);
 
+  // Mover a tela ao título ao mudar de página
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (titleRef.current) {
+      titleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }, [currentPage]);
 
   const handleBrandChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -102,7 +105,8 @@ const ProductList: React.FC = () => {
   return (
     <>
       <div className="max-w-[1200px] m-auto">
-        <div className="flex flex-col text-center mt-12">
+        {/* Ref para o título */}
+        <div ref={titleRef} className="flex flex-col text-center mt-12">
           <p className="text-3xl font-semibold">Catálogo de carros</p>
           <p className="text-zinc-400">
             Veja todos os nossos carros a venda ou pesquise por marcas.
@@ -125,7 +129,12 @@ const ProductList: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 p-2 lg:p-0">
           {currentProducts.map((product) => (
             <Link key={product.id} href={`/product/${product.id}`} passHref>
-              <div className="bg-zinc-100 border border-zinc-300 rounded-lg p-4 cursor-pointer">
+              <div className="relative bg-zinc-100 border border-zinc-300 rounded-lg p-4 cursor-pointer">
+                {product.top && (
+                  <span className="absolute italic top-0 left-0 p-2 px-4 text-zinc-100 font-bold text-sm rounded-tl-lg bg-gradient-to-r from-red-500 via-red-500/90 to-red-500/0">
+                    Novidade 🔥
+                  </span>
+                )}
                 <Image
                   src={product.images[0]}
                   alt={product.name}

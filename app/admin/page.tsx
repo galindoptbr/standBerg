@@ -33,6 +33,7 @@ const AdminPage: React.FC = () => {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [editId, setEditId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isTop, setIsTop] = useState(false);
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -125,7 +126,7 @@ const AdminPage: React.FC = () => {
         gearbox,
         power,
         images: imageUrls,
-        top: false,
+        top: isTop,
       };
 
       if (editId) {
@@ -178,6 +179,7 @@ const AdminPage: React.FC = () => {
     setImages([]);
     setPreviewImages(product.images);
     setEditId(product.id);
+    setIsTop(product.top || false);
   };
 
   const resetForm = () => {
@@ -237,25 +239,41 @@ const AdminPage: React.FC = () => {
         />
         <input
           type="text"
-          placeholder="Combustível"
-          value={fuel}
-          onChange={(e) => setFuel(e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Tipo de Caixa"
-          value={gearbox}
-          onChange={(e) => setGearbox(e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
           placeholder="Potência"
           value={power}
           onChange={(e) => setPower(e.target.value)}
           className="p-2 mb-2 block"
         />
+        <select
+          value={fuel}
+          onChange={(e) => setFuel(e.target.value)}
+          className="p-2 mb-2 block bg-white border rounded"
+        >
+          <option value="">Selecione o Combustível</option>
+          <option value="Gasolina">Gasolina</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Elétrico">Elétrico</option>
+          <option value="Híbrido">Híbrido</option>
+        </select>
+        <select
+          value={gearbox}
+          onChange={(e) => setGearbox(e.target.value)}
+          className="p-2 mb-2 block bg-white border rounded"
+        >
+          <option value="">Selecione o Tipo de Caixa</option>
+          <option value="Manual">Manual</option>
+          <option value="Automática">Automática</option>
+          <option value="CVT">CVT</option>
+        </select>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={isTop}
+            onChange={(e) => setIsTop(e.target.checked)}
+            className="p-2"
+          />
+          Destaque este produto
+        </label>
         <input
           type="file"
           multiple
@@ -307,7 +325,15 @@ const AdminPage: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-2 lg:p-0">
           {products.map((product) => (
-            <div key={product.id} className="bg-zinc-100 rounded-lg p-4 border">
+            <div
+              key={product.id}
+              className="relative bg-zinc-100 rounded-lg p-4 border overflow-hidden"
+            >
+              {product.top && (
+                <span className="absolute italic top-0 left-0 p-2 px-4 text-zinc-100 font-bold text-sm rounded-tl-lg bg-gradient-to-r from-red-500 via-red-500/90 to-red-500/0">
+                  Novidade 🔥
+                </span>
+              )}
               {product.images && product.images.length > 0 && (
                 <Image
                   src={product.images[0]}
