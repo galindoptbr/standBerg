@@ -70,7 +70,7 @@ const ProductPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 p-10 m-auto max-w-[1200px] ">
+      <div className="flex gap-2 p-10 pt-16 m-auto max-w-[1200px] ">
         <ul className="flex gap-2">
           <li>
             <Link
