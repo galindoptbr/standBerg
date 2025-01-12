@@ -20,7 +20,7 @@ import banner3 from "../assets/images/banner-about3.png";
 export const Banner = () => {
   return (
     <>
-      <div className="pt-16">
+      <div className="pt-20">
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
