@@ -8,6 +8,14 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 import logo from "../assets/images/seustandlogo.png";
 
+import {
+  FaFacebook,
+  FaInstagram,
+  FaPhoneSquare,
+  FaYoutube,
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+
 export const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -42,12 +50,36 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="w-full bg-zinc-300 shadow-lg fixed top-0 left-0 z-50">
-        <div className="flex justify-between items-center m-auto p-4 max-w-[1200px]">
-          <Link href="/" replace>
-            <Image className="w-48 rounded-lg" src={logo} alt="logo olavo" />
-          </Link>
-          {/* Navbar para telas grandes */}
+      <div className="w-full bg-zinc-800 sm:bg-zinc-100 shadow-lg fixed top-0 left-0 z-50">
+        <div className="hidden lg:block w-full bg-zinc-800 border-b-4 border-red-600">
+          <div className="flex justify-between items-center m-auto px-8 py-4 max-w-[1200px]">
+            {/* Logo */}
+            <Link href="/" replace>
+              <Image className="w-48" src={logo} alt="logo stand" />
+            </Link>
+
+            {/* Contato (Telefone e E-mail) */}
+            <div className="flex gap-8 text-white">
+              <div className="flex items-center gap-2">
+                <FaPhoneSquare size={20} className="text-red-500" />
+                <p className="text-lg font-semibold">999 999 999</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <MdEmail size={20} className="text-red-500" />
+                <p className="text-lg font-semibold">seuemail@dominio.com</p>
+              </div>
+            </div>
+
+            {/* Ícones de Redes Sociais */}
+            <div className="flex gap-4 text-white cursor-pointer">
+              <FaFacebook className="hover:text-red-500" size={25} />
+              <FaInstagram className="hover:text-red-500" size={25} />
+              <FaYoutube className="hover:text-red-500" size={25} />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center m-auto p-4 max-w-[1200px]">
           <ul className="hidden lg:flex gap-8 items-center font-semibold">
             <li>
               <Link
@@ -73,7 +105,7 @@ export const Navbar = () => {
                 className={`transition-colors duration-300 ${
                   pathname === "/catalog"
                     ? "text-red-500"
-                    : "text-zinc-700 hover:text-red-500"
+                    : "text-zinc-800 hover:text-red-500"
                 }`}
               >
                 Carros
@@ -85,7 +117,7 @@ export const Navbar = () => {
                 className={`transition-colors duration-300 ${
                   pathname === "/about"
                     ? "text-red-500"
-                    : "text-zinc-700 hover:text-red-500"
+                    : "text-zinc-800 hover:text-red-500"
                 }`}
               >
                 Quem Somos
@@ -95,7 +127,7 @@ export const Navbar = () => {
               <li>
                 <Link
                   href="/admin"
-                  className="text-zinc-700 hover:text-red-500 transition-colors duration-300"
+                  className="text-zinc-800 hover:text-red-500 transition-colors duration-300"
                 >
                   Admin
                 </Link>
@@ -105,7 +137,7 @@ export const Navbar = () => {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="text-zinc-700 hover:text-red-500 transition-colors duration-300"
+                  className="text-zinc-800 hover:text-red-500 transition-colors duration-300"
                 >
                   Sair
                 </button>
@@ -114,7 +146,7 @@ export const Navbar = () => {
           </ul>
           <button
             onClick={toggleMenu}
-            className="block lg:hidden text-white focus:outline-none"
+            className="block ml-auto w-max lg:hidden text-white focus:outline-none"
           >
             {isMenuOpen ? (
               <svg
@@ -151,7 +183,7 @@ export const Navbar = () => {
         </div>
         {/* Menu para telas pequenas */}
         <ul
-          className={`lg:hidden bg-zinc-300 fixed inset-y-0 top-20 left-0 h-1/2 w-full z-10 flex flex-col justify-center items-center transition-all duration-300 gap-8 ${
+          className={`lg:hidden bg-zinc-800 fixed inset-y-0 top-14 left-0 h-1/2 w-full z-10 flex flex-col justify-center items-center transition-all duration-300 gap-8 ${
             isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
@@ -173,7 +205,7 @@ export const Navbar = () => {
           <li>
             <Link
               href="/catalog"
-              className={`text-zinc-700 font-bold hover:text-yellow-500`}
+              className={`text-zinc-100 font-bold hover:text-yellow-500`}
               onClick={closeMenu}
             >
               Catálogo
@@ -182,7 +214,7 @@ export const Navbar = () => {
           <li>
             <Link
               href="/about"
-              className={`text-zinc-700 font-bold hover:text-yellow-500`}
+              className={`text-zinc-100 font-bold hover:text-yellow-500`}
               onClick={closeMenu}
             >
               Sobre
@@ -192,7 +224,7 @@ export const Navbar = () => {
             <li>
               <Link
                 href="/admin"
-                className={`text-zinc-700 font-bold hover:text-yellow-500`}
+                className={`text-zinc-100 font-bold hover:text-yellow-500`}
                 onClick={closeMenu}
               >
                 Admin
@@ -206,7 +238,7 @@ export const Navbar = () => {
                   closeMenu();
                   handleLogout();
                 }}
-                className="text-zinc-700 font-bold hover:text-yellow-500"
+                className="text-zinc-100 font-bold hover:text-yellow-500"
               >
                 Sair
               </button>

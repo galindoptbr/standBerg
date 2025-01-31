@@ -12,6 +12,10 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { PiRoadHorizonBold } from "react-icons/pi";
+import { BsFuelPump } from "react-icons/bs";
+import { TbManualGearboxFilled } from "react-icons/tb";
+import { MdOutlineSpeed } from "react-icons/md";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Product } from "../src/types/types";
 import Image from "next/image";
@@ -197,7 +201,7 @@ const AdminPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 pt-28">
+    <div className="p-6 pt-20 md:pt-44">
       <h1 className="text-2xl font-bold mb-4 text-center">
         Cadastro de Carros
       </h1>
@@ -323,64 +327,90 @@ const AdminPage: React.FC = () => {
         <h2 className="text-3xl font-semibold text-center mb-4">
           Carros Cadastrados
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-2 lg:p-0">
+        <div className="flex flex-col gap-4 p-4">
           {products.map((product) => (
             <div
               key={product.id}
-              className="relative bg-zinc-100 rounded-lg p-4 border overflow-hidden"
+              className="relative bg-white rounded-lg p-4 border shadow-sm flex items-center gap-6"
             >
-              {product.top && (
-                <span className="absolute italic top-0 left-0 p-2 px-4 text-zinc-100 font-bold text-sm rounded-tl-lg bg-gradient-to-r from-red-500 via-red-500/90 to-red-500/0">
-                  Novidade 🔥
-                </span>
-              )}
+              {/* Imagem do carro */}
               {product.images && product.images.length > 0 && (
                 <Image
                   src={product.images[0]}
                   alt={`Imagem do produto ${product.name}`}
-                  width={300}
-                  height={300}
-                  className="w-full object-contain rounded"
+                  width={200}
+                  height={140}
+                  className="w-[200px] h-[140px] object-cover rounded-lg"
                   priority
                 />
               )}
-              <div className="flex flex-col items-center mt-4">
-                <h3 className="text-2xl font-bold text-zinc-700">
+
+              {/* Informações do carro */}
+              <div className="flex flex-col flex-1">
+                <h3 className="text-2xl font-bold text-zinc-800">
                   {product.name}
                 </h3>
-                <p className="text-zinc-500 pt-2">{product.brand}</p>
-                <p className="flex items-center gap-1 mt-2 text-2xl font-semibold text-zinc-700">
-                  {new Intl.NumberFormat("de-DE").format(product.price)}{" "}
-                  <span className="text-sm">EUR</span>
-                </p>
-                <div className="flex gap-1 text-zinc-400 text-xs">
-                  <p>
-                    {new Intl.NumberFormat("de-DE").format(product.kilometers)}{" "}
-                    km
-                  </p>
-                  ·<p>{product.fuel}</p>·<p>{product.gearbox}</p>·
-                  <p>{product.power} cv</p>
+                <p className="text-lg text-zinc-600">{product.brand}</p>
+
+                {/* Linha de especificações */}
+                <div className="flex items-center gap-4 text-zinc-500 text-sm mt-2">
+                  <div className="flex items-center gap-1">
+                    <PiRoadHorizonBold size={18} />
+                    <p>
+                      {new Intl.NumberFormat("de-DE").format(
+                        product.kilometers
+                      )}{" "}
+                      km
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <BsFuelPump size={18} />
+                    <p>{product.fuel}</p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <TbManualGearboxFilled size={18} />
+                    <p>{product.gearbox}</p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MdOutlineSpeed size={18} />
+                    <p>{product.power} cv</p>
+                  </div>
                 </div>
-                <div className="flex gap-4 mt-4">
+
+                {product.top && (
+                  <div className="mt-2">
+                    <span className="px-2 py-1 text-xs text-red-600 bg-red-100 rounded">
+                      Novidade 🔥
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Preço e ações */}
+              <div className="flex flex-col items-end gap-2">
+                <p className="text-2xl font-bold text-zinc-800">
+                  {new Intl.NumberFormat("de-DE").format(product.price)} EUR
+                </p>
+                <div className="flex gap-2">
                   <button
                     onClick={(e) => {
                       handleEditProduct(e, product);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded-md font-bold"
+                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-bold"
                   >
                     Editar
                   </button>
                   <button
                     onClick={(e) => handleDeleteProduct(e, product.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white p-2 rounded-md font-bold"
+                    className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-bold"
                   >
                     Deletar
                   </button>
                 </div>
                 <Link href={`/product/${product.id}`}>
-                  <button className="bg-zinc-500 hover:bg-zinc-700 p-2 rounded-md font-bold w-40 mt-4">
-                    <span className="text-white">Ver Anúncio</span>
+                  <button className="bg-zinc-500 hover:bg-zinc-700 p-2 rounded-md font-bold w-40 mt-2 text-white">
+                    Ver Anúncio
                   </button>
                 </Link>
               </div>

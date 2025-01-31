@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "../app/src/components/Navbar";
 import { Footer } from "../app/src/components/Footer";
 import ClientLayout from "../app/src/components/ClientLayout";
+import ScrollToTop from "./src/components/ScrollToTop";
 
 interface CustomMetadata extends Metadata {
   image?: string;
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Navbar />
         <ClientLayout>{children}</ClientLayout>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

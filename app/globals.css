@@ -12,7 +12,7 @@ body {
 /* Estilos globais do scrollbar */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #e2453c #232323;
+    scrollbar-color: #EF4344 #232323;
 }
 
 /* Estilo para navegadores Webkit (Chrome, Safari) */

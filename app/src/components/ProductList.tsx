@@ -78,7 +78,7 @@ const ProductList: React.FC = () => {
   // Mover a tela ao título ao mudar de página
   useEffect(() => {
     if (titleRef.current) {
-      const navbarHeight = 94;
+      const navbarHeight = 180;
       const elementPosition =
         titleRef.current.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - navbarHeight;
@@ -116,7 +116,7 @@ const ProductList: React.FC = () => {
         {/* Ref para o título */}
         <div ref={titleRef} className="flex flex-col text-center mt-12">
           <p className="text-3xl font-semibold">Catálogo de carros</p>
-          <p className="text-zinc-400">
+          <p className="text-zinc-500 text-md">
             Veja todos os nossos carros a venda ou pesquise por marcas.
           </p>
         </div>
@@ -137,7 +137,7 @@ const ProductList: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 p-2 lg:p-0">
           {currentProducts.map((product) => (
             <Link key={product.id} href={`/product/${product.id}`} passHref>
-              <div className="relative bg-zinc-100 border border-zinc-300 rounded-lg p-4 cursor-pointer">
+              <div className="relative bg-zinc-50 border border-zinc-200 rounded-lg p-4 cursor-pointer">
                 {product.top && (
                   <span className="absolute italic top-0 left-0 p-2 px-4 text-zinc-100 font-bold text-sm rounded-tl-lg bg-gradient-to-r from-red-500 via-red-500/90 to-red-500/0">
                     Novidade 🔥
@@ -160,7 +160,7 @@ const ProductList: React.FC = () => {
                     {new Intl.NumberFormat("de-DE").format(product.price)}{" "}
                     <p className="text-sm">EUR</p>
                   </span>
-                  <div className="flex gap-1 text-zinc-400 text-xs">
+                  <div className="flex gap-1 text-zinc-500 text-xs">
                     <p>
                       {new Intl.NumberFormat("de-DE").format(
                         product.kilometers

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Product } from "../../src/types/types";
 import Image from "next/image";
-import { FaWhatsapp } from "react-icons/fa";
 import { db } from "../../src/services/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
@@ -70,7 +69,7 @@ const ProductPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 p-10 pt-32 m-auto max-w-[1200px] ">
+      <div className="flex gap-2 p-10 pt-20 md:pt-44 m-auto max-w-[1200px] ">
         <ul className="flex gap-2">
           <li>
             <Link
@@ -94,14 +93,14 @@ const ProductPage: React.FC = () => {
       </div>
       <div className="bg-zinc-100 border border-zinc-300">
         <div className="flex flex-col lg:flex-row max-w-[1200px] m-auto p-4">
-          <div className="lg:w-1/2">
+          <div className="w-full rounded-lg">
             {mainImage ? (
               <Image
                 src={mainImage}
                 alt={product.name}
                 width={2000}
                 height={2000}
-                className="w-full rounded pr-8"
+                className="w-full rounded-lg"
                 priority
               />
             ) : (
@@ -127,7 +126,7 @@ const ProductPage: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="flex flex-col lg:w-1/2 mt-5 lg:px-8 lg:border-s-2 border-zinc-300">
+          <div className="flex flex-col lg:w-1/2 mt-5 lg:px-8 border-zinc-300">
             <p className="mb-2 text-zinc-500">{product.brand}</p>
             <h1 className="text-2xl font-bold mb-8">{product.name}</h1>
             <span className="flex gap-2 items-baseline text-3xl font-semibold mb-8">
@@ -161,28 +160,14 @@ const ProductPage: React.FC = () => {
                 </li>
               </ul>
             </div>
-            <a
-              href="/"
-              target="_blank"
-              className="inline-block"
-            >
-              <button className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 transition-colors duration-300 p-2 rounded-md w-full m-auto">
-                <span className="text-zinc-200">
-                  <FaWhatsapp size={20} />
-                </span>
-                <span className="font-semibold text-zinc-200">
-                  Enviar Mensagem
-                </span>
-              </button>
-            </a>
-            <div className="flex flex-col gap-2 mt-8">
-              <p className="font-semibold text-2xl text-zinc-600">Anotações</p>
-              <p className="text-zinc-500 text-md pl-4">
-                {product.description}
-              </p>
-            </div>
           </div>
         </div>
+      </div>
+      <div className="max-w-[1200px] m-auto p-4 mt-8">
+        <p className="font-semibold text-2xl text-zinc-600">Anotações</p>
+        <p className="text-zinc-500 text-md pl-4 whitespace-pre-line">
+          {product.description}
+        </p>
       </div>
     </>
   );

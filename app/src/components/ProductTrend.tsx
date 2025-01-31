@@ -66,16 +66,16 @@ const ProductTrend: React.FC = () => {
 
   return (
     <div className="max-w-[1200px] m-auto">
-      <div className="mt-8 p-4 lg:p-0 lg:mt-16">
-        <h1 className="text-3xl font-bold text-center">Acabou de chegar 🔥</h1>
-        <p className="text-zinc-500 text-center">
+      <div className="mt-8 mb-8 p-4 lg:p-0 lg:mt-16">
+        <h1 className="text-3xl font-semibold text-center">Acabou de chegar 🔥</h1>
+        <p className="text-zinc-500 text-md text-center">
           Veja nossa lista de modelos que acabaram de chegar.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-8 p-2 lg:p-0 mt-4">
         {currentProducts.map((product) => (
           <Link key={product.id} href={`/product/${product.id}`} passHref>
-            <div className="relative bg-zinc-100 border border-zinc-300 rounded-lg p-4 cursor-pointer">
+            <div className="relative bg-zinc-50 border border-zinc-200 rounded-lg p-4 cursor-pointer">
               {product.top && (
                 <span className="absolute italic top-0 left-0 p-2 px-4 text-zinc-100 font-bold text-sm rounded-tl-lg bg-gradient-to-r from-red-500 via-red-500/90 to-red-500/0">
                   Novidade 🔥
@@ -98,7 +98,7 @@ const ProductTrend: React.FC = () => {
                   {new Intl.NumberFormat("de-DE").format(product.price)}{" "}
                   <p className="text-sm">EUR</p>
                 </span>
-                <div className="flex gap-1 text-zinc-400 text-xs">
+                <div className="flex gap-1 text-zinc-500 text-xs">
                   <p>
                     {new Intl.NumberFormat("de-DE").format(product.kilometers)}{" "}
                     km
