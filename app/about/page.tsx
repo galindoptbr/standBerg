@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 pt-16 pl-10  m-auto max-w-[1200px] ">
+      <div className="flex gap-2 pt-44 pl-10  m-auto max-w-[1200px] ">
         <ul className="flex gap-2">
           <li>
             <Link
@@ -85,7 +85,7 @@ const AboutPage: React.FC = () => {
             deserunt harum sunt eaque voluptatum, labore ut temporibus eum?
           </p>
         </div>
-        <div className="max-w-[950px] h-[450px] mx-auto mt-10 p-2 lg:p-0">
+        <div className="max-w-[950px] h-[450px] mx-auto mt-10 mb-36 p-2 lg:p-0">
           <Swiper
             cssMode={true}
             navigation={true}
