@@ -41,8 +41,23 @@ const ProductPage: React.FC = () => {
             power: data.power,
             top: data.top || false,
           };
-          setProduct(fetchedProduct);
-          setMainImage(fetchedProduct.images[0] || null);
+
+          // Filtra as imagens válidas e garante que elas serão strings
+          const validImages = (fetchedProduct.images || [])
+            .filter((img) => {
+              if (typeof img === "string") {
+                return img.trim() !== "";
+              } else if (img && typeof img === "object" && "url" in img) {
+                return (img as { url: string }).url.trim() !== "";
+              }
+              return false;
+            })
+            .map((img) =>
+              typeof img === "string" ? img : (img as { url: string }).url
+            );
+
+          setProduct({ ...fetchedProduct, images: validImages });
+          setMainImage(validImages[0] || null);
         } else {
           console.error("Produto não encontrado");
         }
@@ -94,7 +109,7 @@ const ProductPage: React.FC = () => {
       <div className="bg-zinc-100 border border-zinc-300">
         <div className="flex flex-col lg:flex-row max-w-[1200px] m-auto p-4">
           <div className="w-full rounded-lg">
-            {mainImage ? (
+            {mainImage && mainImage.trim() !== "" ? (
               <Image
                 src={mainImage}
                 alt={product.name}
@@ -109,21 +124,31 @@ const ProductPage: React.FC = () => {
               </div>
             )}
             <div className="flex mt-4 gap-2">
-              {product.images.map((image, index) => (
-                <Image
-                  key={index}
-                  src={image}
-                  alt={`${product.name} thumbnail ${index + 1}`}
-                  width={100}
-                  height={100}
-                  className={`w-20 h-20 object-cover rounded cursor-pointer ${
-                    mainImage === image
-                      ? "border-2 border-red-500"
-                      : "border-2 border-transparent"
-                  }`}
-                  onClick={() => setMainImage(image)}
-                />
-              ))}
+              {product.images
+                .filter((image) =>
+                  typeof image === "string" ? image.trim() !== "" : true
+                )
+                .map((image, index) => {
+                  const imageUrl =
+                    typeof image === "string"
+                      ? image
+                      : (image as { url: string; path: string }).url;
+                  return (
+                    <Image
+                      key={index}
+                      src={imageUrl}
+                      alt={`${product.name} thumbnail ${index + 1}`}
+                      width={100}
+                      height={100}
+                      className={`w-20 h-20 object-cover rounded cursor-pointer ${
+                        mainImage === imageUrl
+                          ? "border-2 border-red-500"
+                          : "border-2 border-transparent"
+                      }`}
+                      onClick={() => setMainImage(imageUrl)}
+                    />
+                  );
+                })}
             </div>
           </div>
           <div className="flex flex-col lg:w-1/2 mt-5 lg:px-8 border-zinc-300">

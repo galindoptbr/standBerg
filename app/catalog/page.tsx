@@ -3,7 +3,7 @@ import React from "react";
 
 const Catalog = () => {
   return (
-    <div className="pt-32">
+    <div className="mt-44">
       <ProductList />
     </div>
   );
