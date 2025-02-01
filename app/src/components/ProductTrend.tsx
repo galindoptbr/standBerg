@@ -5,7 +5,7 @@ import { Product } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { db } from "../services/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, DocumentData, getDocs, QueryDocumentSnapshot } from "firebase/firestore";
 
 const ProductTrend: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -13,7 +13,7 @@ const ProductTrend: React.FC = () => {
   const productsPerPage = 4;
 
   // Função para mapear os dados do Firestore para Product
-  const mapProduct = (doc: any): Product => {
+  const mapProduct = (doc: QueryDocumentSnapshot<DocumentData>): Product => {
     const data = doc.data();
     return {
       id: doc.id,

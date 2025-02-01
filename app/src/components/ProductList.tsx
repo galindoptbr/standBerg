@@ -5,7 +5,12 @@ import { Product } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { db } from "../services/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { IoMdMenu } from "react-icons/io";
 
 // Função auxiliar para extrair a URL da imagem
@@ -29,7 +34,7 @@ const ProductList: React.FC = () => {
   const titleRef = useRef<HTMLDivElement | null>(null);
 
   // Mapeamento dos dados do Firestore para o tipo Product
-  const mapProduct = (doc: any): Product => {
+  const mapProduct = (doc: QueryDocumentSnapshot<DocumentData>): Product => {
     const data = doc.data();
     return {
       id: doc.id,

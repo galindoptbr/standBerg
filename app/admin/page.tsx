@@ -11,6 +11,8 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from "firebase/firestore";
 import {
   ref,
@@ -28,13 +30,13 @@ import imageCompression from "browser-image-compression";
 import { Product } from "../src/types/types";
 
 // Modifique o mapProduct para suportar ambos os esquemas (antigo e novo)
-const mapProduct = (doc: any): Product => {
+const mapProduct = (doc: QueryDocumentSnapshot<DocumentData>): Product => {
   const data = doc.data();
   // Se o campo "images" for um array de objetos, extraia somente a URL.
   const images =
     data.images && data.images.length
       ? typeof data.images[0] === "object"
-        ? data.images.map((img: any) => img.url)
+        ? data.images.map((img: { url: string }) => img.url)
         : data.images
       : ["/placeholder.jpg"];
   return {
