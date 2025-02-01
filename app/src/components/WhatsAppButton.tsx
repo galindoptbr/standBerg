@@ -1,6 +1,6 @@
 import React from "react";
-import { FaFacebookMessenger } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
+import { FaWhatsapp } from "react-icons/fa";
+import { RiMessengerLine } from "react-icons/ri";
 
 const WhatsAppButton = () => {
   return (
@@ -8,17 +8,17 @@ const WhatsAppButton = () => {
       <div className="flex flex-col gap-2">
         <a href="/" target="_blank" className="inline-block">
           <button>
-            <IoLogoWhatsapp
-              size={48}
-              className="text-green-500 hover:scale-110 transition-transform cursor-pointer"
+            <FaWhatsapp
+              size={45}
+              className="text-white bg-green-500 p-2 rounded-full hover:scale-110 transition-transform cursor-pointer"
             />
           </button>
         </a>
         <a href="/" target="_blank" className="inline-block">
           <button>
-            <FaFacebookMessenger
-              size={42}
-              className="text-blue-500 hover:scale-110 transition-transform cursor-pointer"
+            <RiMessengerLine
+              size={45}
+              className="text-white bg-blue-500 p-2 rounded-full hover:scale-110 transition-transform cursor-pointer"
             />
           </button>
         </a>

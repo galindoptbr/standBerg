@@ -7,11 +7,20 @@ export interface Product {
   name: string;
   price: number;
   description: string;
-  images: string[];
+  images: ImageType[]; // se preferir manter string[], pode deixar assim.
   brand: string;
   kilometers: number;
   fuel: string;
   gearbox: string;
   power: string;
   top?: boolean;
+  // Novos campos adicionados:
+  mesAno: string;
+  cor: string;
+  lugares: string;
+  portas: string;
+  origem: string;
+  registos: string;
+  inspecao: string;
+  garantia: string;
 }

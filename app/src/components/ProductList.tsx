@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import { Product } from "../types/types";
+import { ImageType, Product } from "../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { db } from "../services/firebase";
@@ -13,15 +13,21 @@ import {
 } from "firebase/firestore";
 import { IoMdMenu } from "react-icons/io";
 
-type ImageType = string | { url: string };
-
 // Função auxiliar para extrair a URL da imagem
-const getImageUrl = (img: ImageType): string => {
-  if (typeof img === "string") {
-    return img;
-  } else if (img && typeof img === "object" && "url" in img) {
+const getImageUrl = (img: ImageType | undefined): string => {
+  if (!img) return "";
+  if (typeof img === "string") return img;
+
+  // Se a imagem tiver a propriedade "url", usamos ela.
+  if ("url" in img && typeof img.url === "string") {
     return img.url;
   }
+
+  // Caso contrário, usamos a propriedade "src" (disponível no StaticImageData)
+  if ("src" in img && typeof img.src === "string") {
+    return img.src;
+  }
+
   return "";
 };
 
@@ -38,6 +44,7 @@ const ProductList: React.FC = () => {
   // Mapeamento dos dados do Firestore para o tipo Product
   const mapProduct = (doc: QueryDocumentSnapshot<DocumentData>): Product => {
     const data = doc.data();
+
     return {
       id: doc.id,
       name: data.name || "Produto sem nome",
@@ -45,11 +52,20 @@ const ProductList: React.FC = () => {
       description: data.description || "Sem descrição",
       images: data.images?.length ? data.images : ["/placeholder.jpg"],
       brand: data.brand || "Marca desconhecida",
-      kilometers: data.kilometers || "Sem Quilometragem",
+      kilometers: data.kilometers ?? 0,
       fuel: data.fuel || "Combustível desconhecido",
       gearbox: data.gearbox || "Câmbio desconhecido",
       power: data.power || "Potência desconhecida",
       top: data.top || false,
+      // Novos campos adicionados:
+      mesAno: data.mesAno || "",
+      cor: data.cor || "",
+      lugares: data.lugares || "",
+      portas: data.portas || "",
+      origem: data.origem || "",
+      registos: data.registos || "",
+      inspecao: data.inspecao || "",
+      garantia: data.garantia || "",
     };
   };
 
@@ -309,7 +325,7 @@ const ProductList: React.FC = () => {
                     km
                   </p>
                   ·<p>{product.fuel}</p>·<p>{product.gearbox}</p>·
-                  <p>{product.power} cv</p>
+                  <p>{product.mesAno}</p>
                 </div>
               </div>
             </div>

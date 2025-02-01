@@ -50,7 +50,8 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="w-full bg-zinc-800 sm:bg-zinc-100 shadow-lg fixed top-0 left-0 z-50">
+      <div className="w-full bg-zinc-800 lg:bg-zinc-100 shadow-lg fixed top-0 left-0 z-50">
+        {/* Header Desktop */}
         <div className="hidden lg:block w-full bg-zinc-800 border-b-4 border-red-600">
           <div className="flex justify-between items-center m-auto px-8 py-4 max-w-[1200px]">
             {/* Logo */}
@@ -79,7 +80,14 @@ export const Navbar = () => {
           </div>
         </div>
 
+        {/* Header Mobile */}
         <div className="flex justify-center items-center m-auto p-4 max-w-[1200px]">
+          {/* Logo visível somente em telas pequenas */}
+          <Link href="/" replace className="block lg:hidden">
+            <Image className="w-32" src={logo} alt="logo stand" />
+          </Link>
+
+          {/* Menu Desktop (oculto em mobile) */}
           <ul className="hidden lg:flex gap-8 items-center font-semibold">
             <li>
               <Link
@@ -144,6 +152,7 @@ export const Navbar = () => {
               </li>
             )}
           </ul>
+          {/* Botão do menu (visível somente em mobile) */}
           <button
             onClick={toggleMenu}
             className="block ml-auto w-max lg:hidden text-white focus:outline-none"
@@ -181,6 +190,7 @@ export const Navbar = () => {
             )}
           </button>
         </div>
+
         {/* Menu para telas pequenas */}
         <ul
           className={`lg:hidden bg-zinc-800 fixed inset-y-0 top-14 left-0 h-1/2 w-full z-10 flex flex-col justify-center items-center transition-all duration-300 gap-8 ${
@@ -191,7 +201,7 @@ export const Navbar = () => {
             <Link
               href="/"
               replace
-              className={`text-red-500 hover:text-yellow-500 font-bold`}
+              className="text-red-500 hover:text-yellow-500 font-bold"
               onClick={() => {
                 closeMenu();
                 if (pathname === "/") {
@@ -205,7 +215,7 @@ export const Navbar = () => {
           <li>
             <Link
               href="/catalog"
-              className={`text-zinc-100 font-bold hover:text-yellow-500`}
+              className="text-zinc-100 font-bold hover:text-yellow-500"
               onClick={closeMenu}
             >
               Catálogo
@@ -214,7 +224,7 @@ export const Navbar = () => {
           <li>
             <Link
               href="/about"
-              className={`text-zinc-100 font-bold hover:text-yellow-500`}
+              className="text-zinc-100 font-bold hover:text-yellow-500"
               onClick={closeMenu}
             >
               Sobre
@@ -224,7 +234,7 @@ export const Navbar = () => {
             <li>
               <Link
                 href="/admin"
-                className={`text-zinc-100 font-bold hover:text-yellow-500`}
+                className="text-zinc-100 font-bold hover:text-yellow-500"
                 onClick={closeMenu}
               >
                 Admin

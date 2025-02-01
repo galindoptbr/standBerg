@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db, storage, app } from "../src/services/firebase";
@@ -20,19 +20,22 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { PiRoadHorizonBold } from "react-icons/pi";
-import { BsFuelPump } from "react-icons/bs";
-import { TbManualGearboxFilled } from "react-icons/tb";
-import { MdOutlineSpeed } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
 import imageCompression from "browser-image-compression";
-import { Product } from "../src/types/types";
+import { PiRoadHorizonBold } from "react-icons/pi";
+import { BsFuelPump } from "react-icons/bs";
+import { TbManualGearboxFilled } from "react-icons/tb";
+import {
+  MdOutlinePhotoCamera,
+  MdOutlineSaveAlt,
+} from "react-icons/md";
+import { ImageType, Product } from "../src/types/types";
+import { AiOutlineCalendar } from "react-icons/ai";
 
-// Modifique o mapProduct para suportar ambos os esquemas (antigo e novo)
-const mapProduct = (doc: QueryDocumentSnapshot<DocumentData>): Product => {
-  const data = doc.data();
-  // Se o campo "images" for um array de objetos, extraia somente a URL.
+// ---------- Atualize o mapProduct se quiser recuperar os novos campos também ----------
+const mapProduct = (docSnap: QueryDocumentSnapshot<DocumentData>): Product => {
+  const data = docSnap.data();
   const images =
     data.images && data.images.length
       ? typeof data.images[0] === "object"
@@ -40,52 +43,149 @@ const mapProduct = (doc: QueryDocumentSnapshot<DocumentData>): Product => {
         : data.images
       : ["/placeholder.jpg"];
   return {
-    id: doc.id,
+    id: docSnap.id,
     name: data.name || "Produto sem nome",
     price: data.price ? Number(data.price) : 0,
     description: data.description || "Sem descrição",
     images,
     brand: data.brand || "Marca desconhecida",
     kilometers: data.kilometers ? Number(data.kilometers) : 0,
-    fuel: data.fuel || "Combustivel desconhecido",
-    gearbox: data.gearbox || "Cambio desconhecido",
-    power: data.power || "Potencia desconhecida",
+    fuel: data.fuel || "Combustível desconhecido",
+    gearbox: data.gearbox || "Câmbio desconhecido",
+    power: data.power || "Potência desconhecida",
     top: data.top || false,
+    mesAno: data.mesAno || "",
+    cor: data.cor || "",
+    lugares: data.lugares || "",
+    portas: data.portas || "",
+    origem: data.origem || "",
+    registos: data.registos || "",
+    inspecao: data.inspecao || "",
+    garantia: data.garantia || "",
   };
 };
+
+// ---------- Estado inicial do formulário, agora com os novos campos ----------
+const initialFormState = {
+  name: "",
+  price: "",
+  description: "",
+  brand: "",
+  kilometers: "",
+  fuel: "",
+  gearbox: "",
+  power: "",
+  isTop: false,
+  mesAno: "",
+  cor: "",
+  lugares: "",
+  portas: "",
+  origem: "",
+  registos: "",
+  inspecao: "",
+  garantia: "",
+};
+
+interface ProductCardProps {
+  product: Product;
+  onEdit: (product: Product) => void;
+  onDelete: (e: React.MouseEvent, id: string) => void;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  onEdit,
+  onDelete,
+}) => (
+  <div className="relative bg-white rounded-lg p-4 border shadow-sm flex flex-col md:flex-row items-center gap-6">
+    {product.images && product.images.length > 0 && (
+      <Image
+        src={product.images[0]}
+        alt={`Imagem do produto ${product.name}`}
+        width={200}
+        height={140}
+        className="w-[200px] h-[140px] object-cover rounded-lg"
+        priority
+      />
+    )}
+    <div className="flex flex-col flex-1 text-center md:text-left">
+      <h3 className="text-2xl font-bold text-zinc-800">{product.name}</h3>
+      <p className="text-lg text-zinc-600">{product.brand}</p>
+      <div className="flex items-center gap-4 text-zinc-500 text-sm mt-2">
+        <div className="flex items-center gap-1">
+          <PiRoadHorizonBold size={18} />
+          <p>{new Intl.NumberFormat("de-DE").format(product.kilometers)} km</p>
+        </div>
+        <div className="flex items-center gap-1">
+          <BsFuelPump size={18} />
+          <p>{product.fuel}</p>
+        </div>
+        <div className="flex items-center gap-1">
+          <TbManualGearboxFilled size={18} />
+          <p>{product.gearbox}</p>
+        </div>
+        <div className="flex items-center gap-1">
+          <AiOutlineCalendar size={18} />
+          <p>{product.mesAno}</p>
+        </div>
+      </div>
+      {product.top && (
+        <div className="mt-2">
+          <span className="px-2 py-1 text-xs text-red-600 bg-red-100 rounded">
+            Novidade 🔥
+          </span>
+        </div>
+      )}
+    </div>
+    <div className="flex flex-col items-end gap-2">
+      <p className="text-2xl font-bold text-zinc-800">
+        {new Intl.NumberFormat("de-DE").format(product.price)} EUR
+      </p>
+      <div className="flex gap-2">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(product);
+          }}
+          className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-bold"
+        >
+          Editar
+        </button>
+        <button
+          onClick={(e) => onDelete(e, product.id)}
+          className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-bold"
+        >
+          Deletar
+        </button>
+      </div>
+      <Link href={`/product/${product.id}`}>
+        <button className="bg-zinc-500 hover:bg-zinc-700 p-2 rounded-md font-bold w-40 mt-2 text-white">
+          Ver Anúncio
+        </button>
+      </Link>
+    </div>
+  </div>
+);
 
 const AdminPage: React.FC = () => {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState({
-    name: "",
-    price: "",
-    description: "",
-    brand: "",
-    kilometers: "",
-    fuel: "",
-    gearbox: "",
-    power: "",
-    isTop: false,
-  });
+  const [form, setForm] = useState(initialFormState);
   const [images, setImages] = useState<File[]>([]);
-  // previewImages continua sendo um array de URLs para visualização (não necessariamente com path)
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [previewImages, setPreviewImages] = useState<ImageType[]>([]);
   const [editId, setEditId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Autenticação
+  // ---------- Autenticação ----------
   useEffect(() => {
     const auth = getAuth(app);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push("/login?error=unauthorized");
-      }
+      if (!user) router.push("/login?error=unauthorized");
     });
     return unsubscribe;
   }, [router]);
 
-  // Fetch dos produtos
+  // ---------- Busca os produtos ----------
   const fetchProducts = useCallback(async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "products"));
@@ -100,36 +200,25 @@ const AdminPage: React.FC = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Atualiza campos do formulário
-  const updateField = (field: string, value: string | boolean) => {
+  // ---------- Handlers do formulário ----------
+  const updateField = (field: keyof typeof form, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Reseta o formulário
   const resetForm = () => {
-    setForm({
-      name: "",
-      price: "",
-      description: "",
-      brand: "",
-      kilometers: "",
-      fuel: "",
-      gearbox: "",
-      power: "",
-      isTop: false,
-    });
+    setForm(initialFormState);
     setImages([]);
     setPreviewImages([]);
     setEditId(null);
   };
 
-  // Upload e compressão das imagens
-  // Agora retorna um array de objetos { url, path }
+  // ---------- Upload e compressão de imagens ----------
   const uploadImages = async (): Promise<{ url: string; path: string }[]> => {
     if (images.length === 0) {
-      // Se não houver novas imagens, assumimos que o previewImages já vem do produto antigo.
-      // Porém, nesse caso, os paths não estão disponíveis. Você pode optar por manter esses dados.
-      return previewImages.map((url) => ({ url, path: "" }));
+      return previewImages.map((img) => ({
+        url: typeof img === "string" ? img : img.src,
+        path: "",
+      }));
     }
     const options = {
       maxSizeMB: 2,
@@ -137,7 +226,7 @@ const AdminPage: React.FC = () => {
       initialQuality: 0.9,
       useWebWorker: true,
     };
-    return await Promise.all(
+    return Promise.all(
       images.map(async (image) => {
         try {
           const compressedImage = await imageCompression(image, options);
@@ -154,12 +243,11 @@ const AdminPage: React.FC = () => {
     );
   };
 
-  // Adiciona ou atualiza produto
+  // ---------- Adiciona ou atualiza produto ----------
   const handleAddProduct = async () => {
     setIsLoading(true);
     try {
       const uploadedImages = await uploadImages();
-
       const productData = {
         name: form.name,
         price: Number(form.price),
@@ -169,9 +257,17 @@ const AdminPage: React.FC = () => {
         fuel: form.fuel,
         gearbox: form.gearbox,
         power: form.power,
-        // Salva o array de objetos (cada objeto tem url e path)
         images: uploadedImages,
         top: form.isTop,
+        // Novos campos:
+        mesAno: form.mesAno,
+        cor: form.cor,
+        lugares: form.lugares,
+        portas: form.portas,
+        origem: form.origem,
+        registos: form.registos,
+        inspecao: form.inspecao,
+        garantia: form.garantia,
       };
 
       if (editId) {
@@ -188,17 +284,15 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  // Deleta produto e também suas imagens do Storage
+  // ---------- Deleta produto e suas imagens no Storage ----------
   const handleDeleteProduct = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     if (!window.confirm("Tem certeza que deseja deletar este anúncio?")) return;
     try {
-      // Primeiro, busque o produto completo para ter os paths
-      const productDoc = await getDocs(collection(db, "products"));
-      const productToDelete = productDoc.docs.find((doc) => doc.id === id);
+      const productSnapshot = await getDocs(collection(db, "products"));
+      const productToDelete = productSnapshot.docs.find((doc) => doc.id === id);
       if (productToDelete) {
         const data = productToDelete.data();
-        // Se os dados foram salvos com o novo esquema, data.images deve ser um array de objetos
         if (
           data.images &&
           data.images.length > 0 &&
@@ -206,7 +300,6 @@ const AdminPage: React.FC = () => {
         ) {
           await Promise.all(
             data.images.map(async (img: { url: string; path: string }) => {
-              // Só tenta deletar se o path estiver disponível
               if (img.path) {
                 const imageRef = ref(storage, img.path);
                 try {
@@ -219,8 +312,6 @@ const AdminPage: React.FC = () => {
           );
         }
       }
-
-      // Exclui o documento do Firestore
       await deleteDoc(doc(db, "products", id));
       setProducts((prev) => prev.filter((p) => p.id !== id));
     } catch (error) {
@@ -228,12 +319,8 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  // Prepara edição do produto
-  const handleEditProduct = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    product: Product
-  ) => {
-    e.stopPropagation();
+  // ---------- Prepara edição do produto ----------
+  const handleEditProduct = (product: Product) => {
     setForm({
       name: product.name,
       price: product.price.toString(),
@@ -244,12 +331,29 @@ const AdminPage: React.FC = () => {
       gearbox: product.gearbox,
       power: product.power,
       isTop: product.top || false,
+      mesAno: product.mesAno || "",
+      cor: product.cor || "",
+      lugares: product.lugares || "",
+      portas: product.portas || "",
+      origem: product.origem || "",
+      registos: product.registos || "",
+      inspecao: product.inspecao || "",
+      garantia: product.garantia || "",
     });
     setImages([]);
-    // Como no Firestore as imagens estão salvas como array de objetos, vamos extrair só as URLs para o preview
     setPreviewImages(product.images);
     setEditId(product.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // ---------- Handler para seleção de arquivos ----------
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      setImages(files);
+      const previews = files.map((file) => URL.createObjectURL(file));
+      setPreviewImages(previews);
+    }
   };
 
   return (
@@ -258,16 +362,17 @@ const AdminPage: React.FC = () => {
         Cadastro de Carros
       </h1>
       <div className="flex flex-col max-w-[750px] m-auto">
+        {/* Campos de input (não-select) */}
         <input
           type="text"
-          placeholder="Modelo da Viatura"
+          placeholder="Modelo"
           value={form.name}
           onChange={(e) => updateField("name", e.target.value)}
           className="p-2 mb-2 block"
         />
         <input
           type="number"
-          placeholder="Preço"
+          placeholder="Preço de Venda"
           value={form.price}
           onChange={(e) => updateField("price", e.target.value)}
           className="p-2 mb-2 block"
@@ -300,49 +405,132 @@ const AdminPage: React.FC = () => {
           onChange={(e) => updateField("power", e.target.value)}
           className="p-2 mb-2 block"
         />
-        <select
-          value={form.fuel}
-          onChange={(e) => updateField("fuel", e.target.value)}
-          className="p-2 mb-2 block bg-white border rounded"
-        >
-          <option value="">Selecione o Combustível</option>
-          <option value="Gasolina">Gasolina</option>
-          <option value="Diesel">Diesel</option>
-          <option value="Elétrico">Elétrico</option>
-          <option value="Híbrido">Híbrido</option>
-        </select>
-        <select
-          value={form.gearbox}
-          onChange={(e) => updateField("gearbox", e.target.value)}
-          className="p-2 mb-2 block bg-white border rounded"
-        >
-          <option value="">Selecione o Tipo de Caixa</option>
-          <option value="Manual">Manual</option>
-          <option value="Automática">Automática</option>
-          <option value="CVT">CVT</option>
-        </select>
-        <label className="flex items-center gap-2">
+        <input
+          type="text"
+          placeholder="Mês/Ano"
+          value={form.mesAno}
+          onChange={(e) => updateField("mesAno", e.target.value)}
+          className="p-2 mb-2 block"
+        />
+        <input
+          type="text"
+          placeholder="Cor"
+          value={form.cor}
+          onChange={(e) => updateField("cor", e.target.value)}
+          className="p-2 mb-2 block"
+        />
+        <input
+          type="text"
+          placeholder="Origem"
+          value={form.origem}
+          onChange={(e) => updateField("origem", e.target.value)}
+          className="p-2 mb-2 block"
+        />
+        <input
+          type="text"
+          placeholder="Registos"
+          value={form.registos}
+          onChange={(e) => updateField("registos", e.target.value)}
+          className="p-2 mb-2 block"
+        />
+        <input
+          type="text"
+          placeholder="Inspeção Ex: 0000-00-00"
+          value={form.inspecao}
+          onChange={(e) => updateField("inspecao", e.target.value)}
+          className="p-2 mb-2 block"
+        />
+        <input
+          type="text"
+          placeholder="Garantia Ex: 18 Meses"
+          value={form.garantia}
+          onChange={(e) => updateField("garantia", e.target.value)}
+          className="p-2 mb-2 block"
+        />
+
+        {/* Bloco dos selects reposicionado para ficar acima do "Destaque este produto" */}
+        <div className="flex flex-col gap-2 mt-4">
+          <select
+            value={form.fuel}
+            onChange={(e) => updateField("fuel", e.target.value)}
+            className="p-2 mb-2 block bg-white border rounded"
+          >
+            <option value="">Combustível</option>
+            <option value="Gasolina">Gasolina</option>
+            <option value="Diesel">Gasóleo</option>
+            <option value="Elétrico">Elétrico</option>
+            <option value="Híbrido">GPL</option>
+            <option value="Híbrido">GNV</option>
+            <option value="Híbrido">Híbrido/Gasolina</option>
+            <option value="Híbrido">Híbrido/Gasóleo</option>
+            <option value="Híbrido">Hidrogénio</option>
+          </select>
+          <select
+            value={form.gearbox}
+            onChange={(e) => updateField("gearbox", e.target.value)}
+            className="p-2 mb-2 block bg-white border rounded"
+          >
+            <option value="">Tipo de Caixa</option>
+            <option value="Manual">Manual</option>
+            <option value="Automática">Automática</option>
+            <option value="CVT">Semi-Automática</option>
+            <option value="CVT">DSG</option>
+            <option value="CVT">Tiptronic</option>
+            <option value="CVT">Sequencial</option>
+            <option value="CVT">Automatizada</option>
+          </select>
+          <select
+            value={form.lugares}
+            onChange={(e) => updateField("lugares", e.target.value)}
+            className="p-2 mb-2 block bg-white border rounded"
+          >
+            <option value="">Lugares</option>
+            <option value="">2</option>
+            <option value="Manual">4</option>
+            <option value="Automática">5</option>
+            <option value="CVT">6</option>
+            <option value="CVT">7</option>
+            <option value="CVT">8</option>
+            <option value="CVT">9+</option>
+          </select>
+          <select
+            value={form.portas}
+            onChange={(e) => updateField("portas", e.target.value)}
+            className="p-2 mb-2 block bg-white border rounded"
+          >
+            <option value="">Portas</option>
+            <option value="">2</option>
+            <option value="Manual">2</option>
+            <option value="Automática">4</option>
+            <option value="CVT">5</option>
+          </select>
+        </div>
+
+        <label className="flex items-center gap-2 mt-4">
           <input
             type="checkbox"
             checked={form.isTop}
             onChange={(e) => updateField("isTop", e.target.checked)}
-            className="p-2"
+            className="w-6 h-6 accent-red-500 cursor-pointer"
           />
           Destaque este produto
         </label>
+
+        <label
+          htmlFor="fileInput"
+          className="flex justify-center gap-2 bg-zinc-500 text-white text-center font-bold px-4 py-2 mt-4 rounded cursor-pointer"
+        >
+          <MdOutlinePhotoCamera size={24} />
+          Adicionar Fotos
+        </label>
         <input
+          id="fileInput"
           type="file"
           multiple
-          onChange={(e) => {
-            if (e.target.files) {
-              const files = Array.from(e.target.files);
-              setImages(files);
-              const previews = files.map((file) => URL.createObjectURL(file));
-              setPreviewImages(previews);
-            }
-          }}
-          className="p-2 mb-2 block"
+          onChange={handleFileChange}
+          className="hidden"
         />
+
         {previewImages.length > 0 && (
           <div className="flex gap-2 mt-4">
             {previewImages.map((src, index) => (
@@ -359,12 +547,13 @@ const AdminPage: React.FC = () => {
         )}
         <button
           onClick={handleAddProduct}
-          className={`p-2 rounded mt-4 text-zinc-200 font-bold ${
+          className={`flex justify-center items-center gap-2 p-2 rounded mt-4 text-zinc-200 font-bold ${
             isLoading
               ? "bg-zinc-500 cursor-not-allowed"
               : "bg-blue-500 hover:bg-blue-700"
           }`}
         >
+          <MdOutlineSaveAlt size={24} />
           {isLoading
             ? "Processando..."
             : editId
@@ -378,82 +567,13 @@ const AdminPage: React.FC = () => {
           Carros Cadastrados
         </h2>
         <div className="flex flex-col gap-4 p-4">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="relative bg-white rounded-lg p-4 border shadow-sm flex flex-col md:flex-row items-center gap-6"
-            >
-              {product.images && product.images.length > 0 && (
-                <Image
-                  src={product.images[0]}
-                  alt={`Imagem do produto ${product.name}`}
-                  width={200}
-                  height={140}
-                  className="w-[200px] h-[140px] object-cover rounded-lg"
-                  priority
-                />
-              )}
-              <div className="flex flex-col flex-1 text-center md:text-left">
-                <h3 className="text-2xl font-bold text-zinc-800">
-                  {product.name}
-                </h3>
-                <p className="text-lg text-zinc-600">{product.brand}</p>
-                <div className="flex items-center gap-4 text-zinc-500 text-sm mt-2">
-                  <div className="flex items-center gap-1">
-                    <PiRoadHorizonBold size={18} />
-                    <p>
-                      {new Intl.NumberFormat("de-DE").format(
-                        product.kilometers
-                      )}{" "}
-                      km
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <BsFuelPump size={18} />
-                    <p>{product.fuel}</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <TbManualGearboxFilled size={18} />
-                    <p>{product.gearbox}</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MdOutlineSpeed size={18} />
-                    <p>{product.power} cv</p>
-                  </div>
-                </div>
-                {product.top && (
-                  <div className="mt-2">
-                    <span className="px-2 py-1 text-xs text-red-600 bg-red-100 rounded">
-                      Novidade 🔥
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className="flex flex-col items-end gap-2">
-                <p className="text-2xl font-bold text-zinc-800">
-                  {new Intl.NumberFormat("de-DE").format(product.price)} EUR
-                </p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={(e) => handleEditProduct(e, product)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-bold"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={(e) => handleDeleteProduct(e, product.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-bold"
-                  >
-                    Deletar
-                  </button>
-                </div>
-                <Link href={`/product/${product.id}`}>
-                  <button className="bg-zinc-500 hover:bg-zinc-700 p-2 rounded-md font-bold w-40 mt-2 text-white">
-                    Ver Anúncio
-                  </button>
-                </Link>
-              </div>
-            </div>
+          {products.map((prod) => (
+            <ProductCard
+              key={prod.id}
+              product={prod}
+              onEdit={handleEditProduct}
+              onDelete={handleDeleteProduct}
+            />
           ))}
         </div>
       </div>
