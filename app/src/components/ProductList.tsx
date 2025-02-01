@@ -13,8 +13,10 @@ import {
 } from "firebase/firestore";
 import { IoMdMenu } from "react-icons/io";
 
+type ImageType = string | { url: string };
+
 // Função auxiliar para extrair a URL da imagem
-const getImageUrl = (img: any): string => {
+const getImageUrl = (img: ImageType): string => {
   if (typeof img === "string") {
     return img;
   } else if (img && typeof img === "object" && "url" in img) {
