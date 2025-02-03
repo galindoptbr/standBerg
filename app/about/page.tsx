@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 pt-44 pl-10  m-auto max-w-[1200px] ">
+      <div className="flex gap-2 md:mt-44 mt-24 pl-10  m-auto max-w-[1200px] ">
         <ul className="flex gap-2">
           <li>
             <Link
@@ -52,7 +52,7 @@ const AboutPage: React.FC = () => {
       <div>
         <div className="flex flex-col m-auto text-center mt-12 max-w-[956px]">
           <p className="text-3xl font-semibold">Sobre o Seu Stand Automóveis</p>
-          <p>
+          <p className="text-zinc-400 mt-6 p-2 lg:p-0">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut aperiam
             eaque dolores, eos aliquam ipsa, accusantium perferendis at ut unde
             modi expedita. Tempore voluptate quod adipisci exercitationem
@@ -62,7 +62,7 @@ const AboutPage: React.FC = () => {
             expedita, dolorem maxime ab!
           </p>
         </div>
-        <div className="max-w-[1200px] mx-auto mt-10">
+        <div className="max-w-[1200px] mx-auto mt-10 mb-36 p-4 lg:p-0">
           <div className="m-auto relative max-w-[1050px] h-0 pb-[56.25%]">
             <iframe
               className="absolute top-0 left-0 w-full h-full border-0 rounded-2xl p-2 lg:p-0"

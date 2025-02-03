@@ -6,6 +6,7 @@ import { Banner } from "./src/components/Banner";
 import ProductList from "./src/components/ProductList";
 import { Depositions } from "./src/components/Depositions";
 import ProductTrend from "./src/components/ProductTrend";
+import Location from "./src/components/Location";
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
         <Banner />
         <ProductTrend />
         <ProductList />
+        <Location />
         <Depositions />
       </div>
     </>

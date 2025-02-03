@@ -131,16 +131,33 @@ export const Navbar = () => {
                 Quem Somos
               </Link>
             </li>
-            {isLoggedIn && ["/", "/catalog", "/about"].includes(pathname) && (
-              <li>
-                <Link
-                  href="/admin"
-                  className="text-zinc-800 hover:text-red-500 transition-colors duration-300"
-                >
-                  Admin
-                </Link>
-              </li>
-            )}
+            <li>
+              <Link
+                href="/intermediation"
+                className={`transition-colors duration-300 ${
+                  pathname === "/intermediation"
+                    ? "text-red-500"
+                    : "text-zinc-800 hover:text-red-500"
+                }`}
+              >
+                Intermediação
+              </Link>
+            </li>
+            {isLoggedIn &&
+              (["/", "/catalog", "/about", "/intermediation"].includes(
+                pathname
+              ) ||
+                pathname.startsWith("/product/")) && (
+                <li>
+                  <Link
+                    href="/admin"
+                    className="text-zinc-800 hover:text-red-500 transition-colors duration-300"
+                  >
+                    Admin
+                  </Link>
+                </li>
+              )}
+
             {pathname.startsWith("/admin") && (
               <li>
                 <button
@@ -228,6 +245,15 @@ export const Navbar = () => {
               onClick={closeMenu}
             >
               Quem Somos
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/intermediation"
+              className="text-zinc-100 font-bold hover:text-red-500"
+              onClick={closeMenu}
+            >
+              Intermediação
             </Link>
           </li>
           {isLoggedIn && ["/", "/catalog", "/about"].includes(pathname) && (

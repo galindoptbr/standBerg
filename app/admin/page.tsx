@@ -513,7 +513,7 @@ const AdminPage: React.FC = () => {
             onChange={(e) => updateField("isTop", e.target.checked)}
             className="w-6 h-6 accent-red-500 cursor-pointer"
           />
-          Destaque este produto
+          Destaque como novidade
         </label>
 
         <label

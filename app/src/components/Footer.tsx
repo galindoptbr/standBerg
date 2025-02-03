@@ -52,7 +52,7 @@ export const Footer = () => {
             </p>
           </Link>
           <span className="text-zinc-500">|</span>
-          <Link href="/intermediacao.pdf" target="_blank">
+          <Link href="/intermediation">
             <p className="hover:text-zinc-200 transition-colors cursor-pointer">
               INTERMEDIAÇÃO DE CRÉDITO
             </p>
