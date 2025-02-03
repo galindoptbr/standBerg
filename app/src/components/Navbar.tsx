@@ -215,7 +215,7 @@ export const Navbar = () => {
           <li>
             <Link
               href="/catalog"
-              className="text-zinc-100 font-bold hover:text-yellow-500"
+              className="text-zinc-100 font-bold hover:text-red-500"
               onClick={closeMenu}
             >
               Catálogo
@@ -224,17 +224,17 @@ export const Navbar = () => {
           <li>
             <Link
               href="/about"
-              className="text-zinc-100 font-bold hover:text-yellow-500"
+              className="text-zinc-100 font-bold hover:text-red-500"
               onClick={closeMenu}
             >
-              Sobre
+              Quem Somos
             </Link>
           </li>
           {isLoggedIn && ["/", "/catalog", "/about"].includes(pathname) && (
             <li>
               <Link
                 href="/admin"
-                className="text-zinc-100 font-bold hover:text-yellow-500"
+                className="text-zinc-100 font-bold hover:text-red-500"
                 onClick={closeMenu}
               >
                 Admin
@@ -248,7 +248,7 @@ export const Navbar = () => {
                   closeMenu();
                   handleLogout();
                 }}
-                className="text-zinc-100 font-bold hover:text-yellow-500"
+                className="text-zinc-100 font-bold hover:text-red-500"
               >
                 Sair
               </button>

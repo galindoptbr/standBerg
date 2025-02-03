@@ -9,7 +9,7 @@ const WhatsAppButton = () => {
         <a href="/" target="_blank" className="inline-block">
           <button>
             <FaWhatsapp
-              size={45}
+              size={41}
               className="text-white bg-green-500 p-2 rounded-full hover:scale-110 transition-transform cursor-pointer"
             />
           </button>
@@ -17,7 +17,7 @@ const WhatsAppButton = () => {
         <a href="/" target="_blank" className="inline-block">
           <button>
             <RiMessengerLine
-              size={45}
+              size={41}
               className="text-white bg-blue-500 p-2 rounded-full hover:scale-110 transition-transform cursor-pointer"
             />
           </button>

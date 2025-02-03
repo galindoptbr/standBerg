@@ -192,7 +192,7 @@ const ProductList: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="max-w-[1200px] m-auto">
+    <div className="max-w-[1200px] m-auto p-4">
       {/* Título */}
       <div ref={titleRef} className="flex flex-col text-center mt-12">
         <p className="text-3xl font-semibold">Catálogo de carros</p>
@@ -287,7 +287,7 @@ const ProductList: React.FC = () => {
       </div>
 
       {/* Lista de Produtos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 p-2 lg:p-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 lg:p-0">
         {currentProducts.map((product) => (
           <Link key={product.id} href={`/product/${product.id}`} passHref>
             <div className="relative bg-zinc-50 border border-zinc-200 rounded-lg p-4 cursor-pointer">
