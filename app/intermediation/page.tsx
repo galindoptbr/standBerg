@@ -2,11 +2,9 @@
 
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import ReCAPTCHA from "react-google-recaptcha";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Definição da interface para os dados do formulário
 interface FormData {
   name: string;
   phone: string;
@@ -16,6 +14,8 @@ interface FormData {
   installments: string;
   message?: string;
   terms: boolean;
+  honeypot?: string;
+  file?: FileList;
 }
 
 const IntermediationPage = () => {
@@ -23,30 +23,42 @@ const IntermediationPage = () => {
   const {
     register,
     handleSubmit,
+    reset, // Adicionado reset para limpar o formulário
     formState: { errors },
   } = useForm<FormData>();
 
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    if (!recaptchaToken) {
-      alert("Por favor, complete o reCAPTCHA.");
+    if (data.honeypot) {
+      console.warn("Tentativa de envio bloqueada por bot.");
       return;
     }
 
     setIsSubmitting(true);
 
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("phone", data.phone);
+    formData.append("email", data.email);
+    formData.append("carYear", data.carYear);
+    formData.append("amount", data.amount);
+    formData.append("installments", data.installments);
+    formData.append("message", data.message || "");
+    formData.append("terms", data.terms.toString());
+
+    if (data.file && data.file.length > 0) {
+      formData.append("file", data.file[0]);
+    }
+
     const response = await fetch("/api/intermediation", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...data, recaptchaToken }),
+      body: formData,
     });
 
     if (response.ok) {
       alert("Formulário enviado com sucesso!");
+      reset(); // Limpa o formulário após o envio
     } else {
       alert("Erro ao enviar o formulário.");
     }
@@ -97,7 +109,6 @@ const IntermediationPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-6">
-          {/* Texto de Intermediação */}
           <div className="bg-gray-100 p-6 text-zinc-700">
             <h2 className="text-xl font-semibold text-red-600">
               Documentos necessários para financiamento a particulares
@@ -136,11 +147,19 @@ const IntermediationPage = () => {
             </ul>
           </div>
 
-          {/* Formulário */}
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:p-0 p-6 rounded-lg"
+            encType="multipart/form-data"
           >
+            <input
+              type="text"
+              {...register("honeypot")}
+              style={{ display: "none" }}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+
             {[
               {
                 name: "name",
@@ -195,7 +214,18 @@ const IntermediationPage = () => {
               />
             </div>
 
-            {/* Checkbox - Aceitar os Termos */}
+            <div className="col-span-2">
+              <label className="text-sm text-zinc-600 block mb-2">
+                Anexe um arquivo PDF (opcional):
+              </label>
+              <input
+                type="file"
+                accept="application/pdf"
+                {...register("file")}
+                className="p-2 bg-zinc-300 rounded-md w-full"
+              />
+            </div>
+
             <div className="flex items-center gap-2 col-span-2">
               <input
                 type="checkbox"
@@ -207,31 +237,6 @@ const IntermediationPage = () => {
               <label className="text-sm text-zinc-600">
                 Li e aceito os Termos e Condições.
               </label>
-            </div>
-            {errors.terms?.message && (
-              <p className="text-red-500 text-sm mt-1 col-span-2">
-                {String(errors.terms?.message)}
-              </p>
-            )}
-
-            {/* Captcha */}
-            <div className="col-span-2 flex flex-col items-start">
-              <ReCAPTCHA
-                sitekey={
-                  process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY || ""
-                }
-                onChange={(token) => setRecaptchaToken(token)}
-                onExpired={() => setRecaptchaToken(null)}
-              />
-              <div className="mt-2 text-gray-600 text-sm flex items-center gap-2">
-                <span className="w-4 h-4 border border-gray-500 rounded-full flex items-center justify-center text-xs">
-                  i
-                </span>
-                <span>
-                  Para verificação de segurança, por favor coloque o visto
-                  acima.
-                </span>
-              </div>
             </div>
 
             <button
