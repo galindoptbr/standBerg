@@ -27,6 +27,7 @@ const IntermediationPage = () => {
   } = useForm<FormData>();
 
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (!recaptchaToken) {
@@ -34,7 +35,9 @@ const IntermediationPage = () => {
       return;
     }
 
-    const response = await fetch("/api/sendEmail", {
+    setIsSubmitting(true);
+
+    const response = await fetch("/api/intermediation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,11 +50,13 @@ const IntermediationPage = () => {
     } else {
       alert("Erro ao enviar o formulário.");
     }
+
+    setIsSubmitting(false);
   };
 
   return (
     <>
-      <div className="flex gap-2 md:mt-44 mt-24 pl-10  m-auto max-w-[1200px] ">
+      <div className="flex gap-2 md:mt-44 mt-24 pl-10 m-auto max-w-[1200px]">
         <ul className="flex gap-2">
           <li>
             <Link
@@ -70,8 +75,8 @@ const IntermediationPage = () => {
             <Link
               href="/intermediation"
               className={`transition-colors duration-300 ${
-                pathname === "/catalog"
-                  ? "text-yellow-500"
+                pathname === "/intermediation"
+                  ? "text-zinc-400"
                   : "text-zinc-400 hover:text-red-500"
               }`}
             >
@@ -80,6 +85,7 @@ const IntermediationPage = () => {
           </li>
         </ul>
       </div>
+
       <div className="max-w-[1200px] mx-auto mb-36 p-4 lg:p-0">
         <div className="flex flex-col text-center mt-12">
           <h1 className="text-3xl font-semibold text-red-600">
@@ -189,12 +195,14 @@ const IntermediationPage = () => {
               />
             </div>
 
+            {/* Checkbox - Aceitar os Termos */}
             <div className="flex items-center gap-2 col-span-2">
               <input
                 type="checkbox"
                 {...register("terms", {
                   required: "Você precisa aceitar os termos.",
                 })}
+                className="w-5 h-5"
               />
               <label className="text-sm text-zinc-600">
                 Li e aceito os Termos e Condições.
@@ -206,7 +214,8 @@ const IntermediationPage = () => {
               </p>
             )}
 
-            <div className="col-span-2 flex justify-start">
+            {/* Captcha */}
+            <div className="col-span-2 flex flex-col items-start">
               <ReCAPTCHA
                 sitekey={
                   process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY || ""
@@ -214,13 +223,23 @@ const IntermediationPage = () => {
                 onChange={(token) => setRecaptchaToken(token)}
                 onExpired={() => setRecaptchaToken(null)}
               />
+              <div className="mt-2 text-gray-600 text-sm flex items-center gap-2">
+                <span className="w-4 h-4 border border-gray-500 rounded-full flex items-center justify-center text-xs">
+                  i
+                </span>
+                <span>
+                  Para verificação de segurança, por favor coloque o visto
+                  acima.
+                </span>
+              </div>
             </div>
 
             <button
               type="submit"
               className="col-span-2 bg-red-600 text-white py-3 rounded-md text-lg font-semibold transition-colors duration-300 hover:bg-red-700"
+              disabled={isSubmitting}
             >
-              ENVIAR
+              {isSubmitting ? "Enviando..." : "ENVIAR"}
             </button>
           </form>
         </div>
