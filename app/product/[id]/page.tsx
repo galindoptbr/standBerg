@@ -319,12 +319,9 @@ const ProductPage: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <div className="max-w-[900px] p-8 mt-8 lg:ml-24">
-        <p className="font-semibold text-2xl pb-8 ml-4 text-zinc-600">
-          Anotações
-        </p>
-        <p className="text-zinc-500 text-md pl-4 whitespace-pre-line">
+      <div className="max-w-[1200px] p-8 mt-8 m-auto">
+        <p className="font-semibold text-2xl pb-8 text-zinc-600">Anotações</p>
+        <p className="text-zinc-500 text-md whitespace-pre-line">
           {product.description}
         </p>
       </div>
