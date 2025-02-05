@@ -203,13 +203,13 @@ const ProductList: React.FC = () => {
       </div>
 
       {/* Filtros */}
-      <div className="max-w-[1100px] flex flex-wrap justify-center gap-4 m-auto mt-6 bg-zinc-800 p-4 rounded-lg">
+      <div className="max-w-[1000px] flex flex-wrap justify-center gap-2 m-auto mt-6 bg-zinc-300 p-2 rounded-lg">
         {/* Filtro por Marca */}
         <div className="relative">
           <select
             onChange={handleBrandChange}
             value={selectedBrand}
-            className="p-3 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
+            className="p-2 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
           >
             <option value="">MARCA</option>
             {brandsOptions.map(({ brand, count }) => (
@@ -228,7 +228,7 @@ const ProductList: React.FC = () => {
           <select
             onChange={handleModelChange}
             value={selectedModel}
-            className="p-3 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
+            className="p-2 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
             disabled={!selectedBrand && products.length > 0}
           >
             <option value="">
@@ -250,7 +250,7 @@ const ProductList: React.FC = () => {
           <select
             onChange={handleFuelChange}
             value={selectedFuel}
-            className="p-3 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
+            className="p-2 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
           >
             <option value="">COMBUSTÍVEL</option>
             {fuelOptions.map((fuel) => (
@@ -269,7 +269,7 @@ const ProductList: React.FC = () => {
           <select
             onChange={handlePriceChange}
             value={selectedPrice}
-            className="p-3 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
+            className="p-2 text-center bg-zinc-200 text-red-500 font-bold rounded w-60 appearance-none"
           >
             <option value="" disabled hidden>
               PREÇO ATÉ

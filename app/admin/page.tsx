@@ -26,10 +26,7 @@ import imageCompression from "browser-image-compression";
 import { PiRoadHorizonBold } from "react-icons/pi";
 import { BsFuelPump } from "react-icons/bs";
 import { TbManualGearboxFilled } from "react-icons/tb";
-import {
-  MdOutlinePhotoCamera,
-  MdOutlineSaveAlt,
-} from "react-icons/md";
+import { MdOutlinePhotoCamera, MdOutlineSaveAlt } from "react-icons/md";
 import { ImageType, Product } from "../src/types/types";
 import { AiOutlineCalendar } from "react-icons/ai";
 
@@ -112,19 +109,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <h3 className="text-2xl font-bold text-zinc-800">{product.name}</h3>
       <p className="text-lg text-zinc-600">{product.brand}</p>
       <div className="flex items-center gap-4 text-zinc-500 text-sm mt-2">
-        <div className="flex items-center gap-1">
+        <div className="flex flex-col items-center">
           <PiRoadHorizonBold size={18} />
           <p>{new Intl.NumberFormat("de-DE").format(product.kilometers)} km</p>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex flex-col items-center">
           <BsFuelPump size={18} />
           <p>{product.fuel}</p>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex flex-col items-center">
           <TbManualGearboxFilled size={18} />
           <p>{product.gearbox}</p>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex flex-col items-center">
           <AiOutlineCalendar size={18} />
           <p>{product.mesAno}</p>
         </div>
@@ -357,211 +354,216 @@ const AdminPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 pt-20 md:pt-44">
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        Cadastro de Carros
-      </h1>
-      <div className="flex flex-col max-w-[750px] m-auto">
-        {/* Campos de input (não-select) */}
-        <input
-          type="text"
-          placeholder="Modelo"
-          value={form.name}
-          onChange={(e) => updateField("name", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="number"
-          placeholder="Preço de Venda"
-          value={form.price}
-          onChange={(e) => updateField("price", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <textarea
-          placeholder="Descrição"
-          value={form.description}
-          onChange={(e) => updateField("description", e.target.value)}
-          rows={4}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Marca"
-          value={form.brand}
-          onChange={(e) => updateField("brand", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="number"
-          placeholder="Quilometragem"
-          value={form.kilometers}
-          onChange={(e) => updateField("kilometers", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Potência"
-          value={form.power}
-          onChange={(e) => updateField("power", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Mês/Ano"
-          value={form.mesAno}
-          onChange={(e) => updateField("mesAno", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Cor"
-          value={form.cor}
-          onChange={(e) => updateField("cor", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Origem"
-          value={form.origem}
-          onChange={(e) => updateField("origem", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Registos"
-          value={form.registos}
-          onChange={(e) => updateField("registos", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Inspeção Ex: 0000-00-00"
-          value={form.inspecao}
-          onChange={(e) => updateField("inspecao", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-        <input
-          type="text"
-          placeholder="Garantia Ex: 18 Meses"
-          value={form.garantia}
-          onChange={(e) => updateField("garantia", e.target.value)}
-          className="p-2 mb-2 block"
-        />
-
-        {/* Bloco dos selects reposicionado para ficar acima do "Destaque este produto" */}
-        <div className="flex flex-col gap-2 mt-4">
-          <select
-            value={form.fuel}
-            onChange={(e) => updateField("fuel", e.target.value)}
-            className="p-2 mb-2 block bg-white border rounded"
-          >
-            <option value="">Combustível</option>
-            <option value="Gasolina">Gasolina</option>
-            <option value="Diesel">Gasóleo</option>
-            <option value="Elétrico">Elétrico</option>
-            <option value="Híbrido">GPL</option>
-            <option value="Híbrido">GNV</option>
-            <option value="Híbrido">Híbrido/Gasolina</option>
-            <option value="Híbrido">Híbrido/Gasóleo</option>
-            <option value="Híbrido">Hidrogénio</option>
-          </select>
-          <select
-            value={form.gearbox}
-            onChange={(e) => updateField("gearbox", e.target.value)}
-            className="p-2 mb-2 block bg-white border rounded"
-          >
-            <option value="">Tipo de Caixa</option>
-            <option value="Manual">Manual</option>
-            <option value="Automática">Automática</option>
-            <option value="CVT">Semi-Automática</option>
-            <option value="CVT">DSG</option>
-            <option value="CVT">Tiptronic</option>
-            <option value="CVT">Sequencial</option>
-            <option value="CVT">Automatizada</option>
-          </select>
-          <select
-            value={form.lugares}
-            onChange={(e) => updateField("lugares", e.target.value)}
-            className="p-2 mb-2 block bg-white border rounded"
-          >
-            <option value="">Lugares</option>
-            <option value="">2</option>
-            <option value="Manual">4</option>
-            <option value="Automática">5</option>
-            <option value="CVT">6</option>
-            <option value="CVT">7</option>
-            <option value="CVT">8</option>
-            <option value="CVT">9+</option>
-          </select>
-          <select
-            value={form.portas}
-            onChange={(e) => updateField("portas", e.target.value)}
-            className="p-2 mb-2 block bg-white border rounded"
-          >
-            <option value="">Portas</option>
-            <option value="">2</option>
-            <option value="Manual">2</option>
-            <option value="Automática">4</option>
-            <option value="CVT">5</option>
-          </select>
-        </div>
-
-        <label className="flex items-center gap-2 mt-4">
-          <input
-            type="checkbox"
-            checked={form.isTop}
-            onChange={(e) => updateField("isTop", e.target.checked)}
-            className="w-6 h-6 accent-red-500 cursor-pointer"
-          />
-          Destaque como novidade
-        </label>
-
-        <label
-          htmlFor="fileInput"
-          className="flex justify-center gap-2 bg-zinc-500 text-white text-center font-bold px-4 py-2 mt-4 rounded cursor-pointer"
-        >
-          <MdOutlinePhotoCamera size={24} />
-          Adicionar Fotos
-        </label>
-        <input
-          id="fileInput"
-          type="file"
-          multiple
-          onChange={handleFileChange}
-          className="hidden"
-        />
-
-        {previewImages.length > 0 && (
-          <div className="flex gap-2 mt-4">
-            {previewImages.map((src, index) => (
-              <Image
-                key={index}
-                src={src}
-                alt={`Pré-visualização ${index + 1}`}
-                className="w-24 h-24 object-cover rounded"
-                width={96}
-                height={96}
-              />
-            ))}
+    <>
+      <div className="p-6 pt-20 md:pt-44">
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Cadastro de Carros
+        </h1>
+        <div className="flex flex-col max-w-[750px] m-auto">
+          {/* Linha 1 - Modelo e Preço */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Modelo"
+              value={form.name}
+              onChange={(e) => updateField("name", e.target.value)}
+              className="flex-1 p-2 mb-2"
+            />
+            <input
+              type="number"
+              placeholder="Preço de Venda"
+              value={form.price}
+              onChange={(e) => updateField("price", e.target.value)}
+              className="w-1/3 p-2 mb-2"
+            />
           </div>
-        )}
-        <button
-          onClick={handleAddProduct}
-          className={`flex justify-center items-center gap-2 p-2 rounded mt-4 text-zinc-200 font-bold ${
-            isLoading
-              ? "bg-zinc-500 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-700"
-          }`}
-        >
-          <MdOutlineSaveAlt size={24} />
-          {isLoading
-            ? "Processando..."
-            : editId
-            ? "Atualizar Carro"
-            : "Cadastrar Carro"}
-        </button>
-      </div>
 
+          {/* Linha 2 - Quilometragem e Potência */}
+          <div className="flex gap-2">
+            <input
+              type="number"
+              placeholder="Quilometragem"
+              value={form.kilometers}
+              onChange={(e) => updateField("kilometers", e.target.value)}
+              className="flex-1 p-2 mb-2"
+            />
+            <input
+              type="text"
+              placeholder="Potência"
+              value={form.power}
+              onChange={(e) => updateField("power", e.target.value)}
+              className="w-1/3 p-2 mb-2"
+            />
+          </div>
+
+          {/* Linha 3 - Mês/Ano e Cor */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Mês/Ano"
+              value={form.mesAno}
+              onChange={(e) => updateField("mesAno", e.target.value)}
+              className="w-1/3 p-2 mb-2"
+            />
+            <input
+              type="text"
+              placeholder="Cor"
+              value={form.cor}
+              onChange={(e) => updateField("cor", e.target.value)}
+              className="flex-1 p-2 mb-2"
+            />
+          </div>
+
+          {/* Linha 4 - Origem e Registos */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Origem"
+              value={form.origem}
+              onChange={(e) => updateField("origem", e.target.value)}
+              className="flex-1 p-2 mb-2"
+            />
+            <input
+              type="text"
+              placeholder="Registos"
+              value={form.registos}
+              onChange={(e) => updateField("registos", e.target.value)}
+              className="w-1/3 p-2 mb-2"
+            />
+          </div>
+
+          {/* Linha 5 - Inspeção e Garantia */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Inspeção Ex: 0000-00-00"
+              value={form.inspecao}
+              onChange={(e) => updateField("inspecao", e.target.value)}
+              className="flex-1 p-2 mb-2"
+            />
+            <input
+              type="text"
+              placeholder="Garantia Ex: 18 Meses"
+              value={form.garantia}
+              onChange={(e) => updateField("garantia", e.target.value)}
+              className="w-1/3 p-2 mb-2"
+            />
+          </div>
+
+          {/* Descrição ocupa toda a largura */}
+          <textarea
+            placeholder="Descrição"
+            value={form.description}
+            onChange={(e) => updateField("description", e.target.value)}
+            rows={4}
+            className="p-2 mb-2"
+          />
+
+          {/* Linha 6 - Selects agrupados */}
+          <div className="grid grid-cols-2 gap-2">
+            <select
+              value={form.fuel}
+              onChange={(e) => updateField("fuel", e.target.value)}
+              className="p-2 bg-white border rounded"
+            >
+              <option value="">Combustível</option>
+              <option value="Gasolina">Gasolina</option>
+              <option value="Gasóleo">Gasóleo</option>
+              <option value="Elétrico">Elétrico</option>
+              <option value="GPL">GPL</option>
+              <option value="GNV">GNV</option>
+              <option value="Híbrido/Gasolina">Híbrido/Gasolina</option>
+              <option value="Híbrido/Gasóleo">Híbrido/Gasóleo</option>
+              <option value="Hidrogénio">Hidrogénio</option>
+            </select>
+
+            <select
+              value={form.gearbox}
+              onChange={(e) => updateField("gearbox", e.target.value)}
+              className="p-2 bg-white border rounded"
+            >
+              <option value="">Tipo de Caixa</option>
+              <option value="Manual">Manual</option>
+              <option value="Automática">Automática</option>
+              <option value="Semi-Automática">Semi-Automática</option>
+              <option value="DSG">DSG</option>
+              <option value="Tiptronic">Tiptronic</option>
+              <option value="Sequencial">Sequencial</option>
+              <option value="Automatizada">Automatizada</option>
+            </select>
+
+            <select
+              value={form.lugares}
+              onChange={(e) => updateField("lugares", e.target.value)}
+              className="p-2 bg-white border rounded"
+            >
+              <option value="">Lugares</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9+">9+</option>
+            </select>
+
+            <select
+              value={form.portas}
+              onChange={(e) => updateField("portas", e.target.value)}
+              className="p-2 bg-white border rounded"
+            >
+              <option value="">Portas</option>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          {/* Checkbox de Destaque */}
+          <label className="flex items-center gap-2 mt-4">
+            <input
+              type="checkbox"
+              checked={form.isTop}
+              onChange={(e) => updateField("isTop", e.target.checked)}
+              className="w-6 h-6 accent-red-500 cursor-pointer"
+            />
+            Destaque como novidade
+          </label>
+
+          {/* Upload de imagens */}
+          <label
+            htmlFor="fileInput"
+            className="flex justify-center gap-2 bg-zinc-500 text-white text-center font-bold px-4 py-2 mt-4 rounded cursor-pointer"
+          >
+            <MdOutlinePhotoCamera size={24} />
+            Adicionar Fotos
+          </label>
+          <input
+            id="fileInput"
+            type="file"
+            multiple
+            onChange={handleFileChange}
+            className="hidden"
+          />
+
+          {/* Botão de envio */}
+          <button
+            onClick={handleAddProduct}
+            className={`flex justify-center items-center gap-2 p-2 rounded mt-4 text-white font-bold ${
+              isLoading
+                ? "bg-zinc-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-700"
+            }`}
+          >
+            <MdOutlineSaveAlt size={24} />
+            {isLoading
+              ? "Processando..."
+              : editId
+              ? "Atualizar Carro"
+              : "Cadastrar Carro"}
+          </button>
+        </div>
+      </div>
       <div className="mt-8 max-w-[1200px] m-auto">
         <h2 className="text-3xl font-semibold text-center mb-4">
           Carros Cadastrados
@@ -577,7 +579,7 @@ const AdminPage: React.FC = () => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
