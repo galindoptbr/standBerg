@@ -234,9 +234,9 @@ const IntermediationPage = () => {
                 })}
                 className="w-5 h-5"
               />
-              <label className="text-sm text-zinc-600">
+              <Link href="/terms" className="text-sm text-zinc-600 hover:text-blue-500 underline">
                 Li e aceito os Termos e Condições.
-              </label>
+              </Link>
             </div>
 
             <button
