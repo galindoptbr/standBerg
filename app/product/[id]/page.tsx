@@ -320,7 +320,7 @@ const ProductPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[900px] p-8 mt-8 ml-24">
+      <div className="max-w-[900px] p-8 mt-8 lg:ml-24">
         <p className="font-semibold text-2xl pb-8 ml-4 text-zinc-600">
           Anotações
         </p>
