@@ -218,9 +218,9 @@ const AdminPage: React.FC = () => {
       }));
     }
     const options = {
-      maxSizeMB: 2,
-      maxWidthOrHeight: 1200,
-      initialQuality: 0.9,
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1000,
+      initialQuality: 0.8,
       useWebWorker: true,
     };
     return Promise.all(
@@ -375,6 +375,17 @@ const AdminPage: React.FC = () => {
               value={form.price}
               onChange={(e) => updateField("price", e.target.value)}
               className="w-1/3 p-2 mb-2"
+            />
+          </div>
+
+          {/* Nova Linha - Marca */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Marca"
+              value={form.brand}
+              onChange={(e) => updateField("brand", e.target.value)}
+              className="flex-1 p-2 mb-2"
             />
           </div>
 
@@ -545,6 +556,20 @@ const AdminPage: React.FC = () => {
             onChange={handleFileChange}
             className="hidden"
           />
+
+          {/* Pré-visualização das imagens selecionadas */}
+          {previewImages.length > 0 && (
+            <div className="flex flex-wrap gap-6 mt-4">
+              {previewImages.map((src, index) => (
+                <img
+                  key={index}
+                  src={typeof src === "string" ? src : src.src}
+                  alt={`Preview ${index + 1}`}
+                  className="w-32 h-32 object-cover rounded border"
+                />
+              ))}
+            </div>
+          )}
 
           {/* Botão de envio */}
           <button
