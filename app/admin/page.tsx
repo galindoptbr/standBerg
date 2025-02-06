@@ -22,7 +22,6 @@ import {
 } from "firebase/storage";
 import Image from "next/image";
 import Link from "next/link";
-import imageCompression from "browser-image-compression";
 import { PiRoadHorizonBold } from "react-icons/pi";
 import { BsFuelPump } from "react-icons/bs";
 import { TbManualGearboxFilled } from "react-icons/tb";
@@ -209,7 +208,7 @@ const AdminPage: React.FC = () => {
     setEditId(null);
   };
 
-  // ---------- Upload e compressão de imagens ----------
+  // ---------- Upload e compressão de imagens (Importação dinâmica) ----------
   const uploadImages = async (): Promise<{ url: string; path: string }[]> => {
     if (images.length === 0) {
       return previewImages.map((img) => ({
@@ -217,12 +216,19 @@ const AdminPage: React.FC = () => {
         path: "",
       }));
     }
+
+    // Importa a biblioteca dinamicamente no ambiente do browser
+    const { default: imageCompression } = await import(
+      "browser-image-compression"
+    );
+
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 1000,
       initialQuality: 0.8,
       useWebWorker: true,
     };
+
     return Promise.all(
       images.map(async (image) => {
         try {
