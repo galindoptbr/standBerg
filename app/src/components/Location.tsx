@@ -5,14 +5,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Estilos para o container do mapa
-const containerStyle = {
-  width: "100%",
-  height: "400px",
-  borderRadius: "8px",
-  overflow: "hidden",
-};
-
 // Coordenadas do stand (latitude e longitude)
 const center: [number, number] = [41.5387, -8.6158];
 
@@ -31,8 +23,10 @@ L.Marker.prototype.options.icon = defaultIcon;
 
 const Location = () => {
   return (
-    <div className="max-full m-auto p-8 lg:p-10 bg-zinc-50 relative z-10">
-      <h1 className="text-3xl font-semibold text-center">Onde nos encontrar</h1>
+    <div className="w-full m-auto p-8 lg:p-10 bg-zinc-50 relative z-10">
+      <h1 className="text-3xl font-semibold text-center text-zinc-700">
+        Onde nos encontrar
+      </h1>
       <p className="text-zinc-500 text-md text-center">
         Veja a localização do nosso stand e entre em contato conosco.
       </p>
@@ -44,7 +38,7 @@ const Location = () => {
             center={center}
             zoom={15}
             scrollWheelZoom={false}
-            style={containerStyle}
+            className="w-full h-full"
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
