@@ -29,7 +29,7 @@ const TermsPage: React.FC = () => {
               href="/terms"
               className={`transition-colors duration-300 ${
                 pathname === "/terms"
-                  ? "text-yellow-500"
+                  ? "text-zinc-400"
                   : "text-zinc-400 hover:text-red-500"
               }`}
             >
