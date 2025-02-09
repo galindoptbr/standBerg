@@ -225,20 +225,28 @@ const IntermediationPage = () => {
                 className="p-2 bg-zinc-300 rounded-md w-full"
               />
             </div>
-
-            <div className="flex items-center gap-2 col-span-2">
-              <input
-                type="checkbox"
-                {...register("terms", {
-                  required: "Você precisa aceitar os termos.",
-                })}
-                className="w-5 h-5"
-              />
-              <Link href="/terms" className="text-sm text-zinc-600 hover:text-blue-500 underline">
-                Li e aceito os Termos e Condições.
-              </Link>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 col-span-2">
+                <input
+                  type="checkbox"
+                  {...register("terms", {
+                    required: "Você precisa aceitar os termos.",
+                  })}
+                  className="w-6 h-6"
+                />
+                <Link
+                  href="/terms"
+                  className="text-sm text-zinc-600 hover:text-blue-500 underline"
+                >
+                  Li e aceito os Termos e Condições.
+                </Link>
+              </div>
+              {errors.terms && (
+                <p className="text-red-500 text-sm ml-8 col-span-2">
+                  {errors.terms.message}
+                </p>
+              )}
             </div>
-
             <button
               type="submit"
               className="col-span-2 bg-red-600 text-white py-3 rounded-md text-lg font-semibold transition-colors duration-300 hover:bg-red-700"
