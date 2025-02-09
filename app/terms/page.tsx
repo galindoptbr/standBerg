@@ -17,7 +17,7 @@ const TermsPage: React.FC = () => {
               replace
               className={`transition-colors duration-300 ${
                 pathname === "/"
-                  ? "text-yellow-500"
+                  ? "text-zinc-400"
                   : "text-zinc-400 hover:text-red-500"
               }`}
             >
